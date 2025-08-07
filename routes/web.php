@@ -6,11 +6,12 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::get('dashboard', [\App\Http\Controllers\PromptController::class, 'dashboard'])->name('dashboard');
+Route::get('preferences', [\App\Http\Controllers\PromptController::class, 'preferences'])->name('preferences');
+Route::post('preferences', [\App\Http\Controllers\PromptController::class, 'storePreferences'])->name('storePreferences');
+Route::post('prompt/{prompt}/response', [\App\Http\Controllers\PromptController::class, 'saveResponse'])->name('saveResponse');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
 });
 
 require __DIR__.'/settings.php';
