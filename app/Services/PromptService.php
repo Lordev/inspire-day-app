@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Prompt;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 use App\Repositories\PromptRepository;
 
 class PromptService
@@ -21,7 +22,12 @@ class PromptService
         $niche = $user->niche ?: 'personal growth';
         $tone = $user->tone ?: 'reflective';
         
-        return "Write about your biggest challenges in {$niche} today, with a {$tone} perspective.";
+        $prompt = Http::post(env('AI_SERVICE_URL') . '/generate', [
+            'niche' => $niche,
+            'tone' => $tone,
+        ])->throw()->json('prompt');
+
+        return $prompt;
     }
 
     public function getTodaysPrompt(User $user): ?Prompt
