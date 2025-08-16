@@ -1,0 +1,24 @@
+# Logs
+logs/
+# Env files
+*.env
+# macOS
+.DS_Store
+# merge leftovers
+*.orig
+
+# PHP / Composer
+InspireDay-app/vendor/
+
+# Node Modules
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Docker logs
+*.log
+
+# Service env
+.env

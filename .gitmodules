@@ -1,0 +1,6 @@
+[submodule "InspireDay-ai-service"]
+	path = InspireDay-ai-service
+	url = ../InspireDay-ai-service
+[submodule "InspireDay-web"]
+	path = InspireDay-web
+	url = ../InspireDay-web
