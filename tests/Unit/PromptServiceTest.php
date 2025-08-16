@@ -12,7 +12,7 @@ class PromptServiceTest extends TestCase
     public function test_generate_prompt_for_user()
     {
         Http::fake([
-            env('AI_SERVICE_URL') . '/generate' => Http::response(['prompt' => 'Mocked prompt!'], 200),
+            env('AI_SERVICE_URL') . '/generate' => Http::response(['output' => 'Mocked prompt!'], 200),
         ]);
 
         $user = User::factory()->make(['niche' => 'productivity', 'tone' => 'strict']);
