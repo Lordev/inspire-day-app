@@ -40,8 +40,8 @@ async def generate(data: GenerateRequest):
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": f"Niche: {data.niche}, Tone: {data.tone}. Respond in one short, complete sentence suitable for mobile display."},
-                {"role": "user", "content": data.prompt},
+                {"role": "system", "content": f"Generate a reflective prompt for the user. The niche is '{data.niche}' and the tone is '{data.tone}'. Respond in one concise sentence."},
+                {"role": "user", "content": "Generate a reflective prompt."},
             ],
             max_tokens=35,
             n=1
