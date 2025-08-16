@@ -5,7 +5,10 @@ namespace App\Services;
 use App\Models\Prompt;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use App\Repositories\PromptRepository;
+use App\Enums\Niche;
+use App\Enums\Tone;
 
 class PromptService
 {
@@ -18,16 +21,78 @@ class PromptService
     
     public function generatePromptForUser(User $user): string
     {
-        // Dummy prompt for now; replace with OpenAI call later
-        $niche = $user->niche ?: 'personal growth';
-        $tone = $user->tone ?: 'reflective';
+        $niche = $user->niche ?: Niche::PERSONAL_GROWTH->value;
+        $tone = $user->tone ?: Tone::REFLECTIVE->value;
         
-        $prompt = Http::post(env('AI_SERVICE_URL') . '/generate', [
-            'niche' => $niche,
-            'tone' => $tone,
-        ])->throw()->json('prompt');
+        try {
+            $response = Http::timeout(30)->post(env('AI_SERVICE_URL') . '/generate', [
+                'niche' => $niche,
+                'tone' => $tone,
+            ]);
 
-        return $prompt;
+            // Log the response for debugging
+            Log::info('AI Service Response', [
+                'status' => $response->status(),
+                'body' => $response->body(),
+                'url' => env('AI_SERVICE_URL') . '/generate'
+            ]);
+
+            if (!$response->successful()) {
+                Log::error('AI Service failed', [
+                    'status' => $response->status(),
+                    'body' => $response->body()
+                ]);
+                return $this->getFallbackPrompt($niche);
+            }
+
+            $prompt = $response->json('output');
+            
+            if (empty($prompt)) {
+                Log::warning('AI Service returned empty prompt', [
+                    'response' => $response->json()
+                ]);
+                return $this->getFallbackPrompt($niche);
+            }
+
+            return $prompt;
+
+        } catch (\Exception $e) {
+            Log::error('AI Service connection failed', [
+                'error' => $e->getMessage(),
+                'url' => env('AI_SERVICE_URL') . '/generate'
+            ]);
+            
+            return $this->getFallbackPrompt($niche);
+        }
+    }
+
+    private function getFallbackPrompt(string $niche): string
+    {
+        $templates = [
+            Niche::PERSONAL_GROWTH->value => [
+                'What small step toward growth did you take today?',
+                'How did you challenge yourself today?',
+                'What did you learn about yourself today?',
+            ],
+            Niche::BUSINESS->value => [
+                'What value did you create in your work today?',
+                'How did you advance your career goals today?',
+                'What business insight did you gain today?',
+            ],
+            Niche::CREATIVITY->value => [
+                'What inspired your creativity today?',
+                'How did you express yourself creatively today?',
+                'What new idea sparked your interest today?',
+            ],
+            Niche::WELLNESS->value => [
+                'What did you do today to nurture your well-being?',
+                'How did you practice self-care today?',
+                'What healthy choice did you make today?',
+            ],
+        ];
+        
+        $prompts = $templates[$niche] ?? $templates[Niche::PERSONAL_GROWTH->value];
+        return $prompts[array_rand($prompts)];
     }
 
     public function getTodaysPrompt(User $user): ?Prompt

@@ -15,6 +15,10 @@ interface Props {
         niche: string | null;
         tone: string | null;
     };
+    options: {
+        niches: Record<string, string>;
+        tones: Record<string, string>;
+    };
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -28,7 +32,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Preferences({ user }: Props) {
+export default function Preferences({ user, options }: Props) {
     const { data, setData, post, processing } = useForm({
         niche: user.niche || 'personal growth',
         tone: user.tone || 'reflective',
@@ -62,10 +66,11 @@ export default function Preferences({ user }: Props) {
                                             <SelectValue placeholder="Select a niche" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="business">Business & Entrepreneurship</SelectItem>
-                                            <SelectItem value="creativity">Creativity & Writing</SelectItem>
-                                            <SelectItem value="wellness">Health & Wellness</SelectItem>
-                                            <SelectItem value="personal growth">Personal Growth</SelectItem>
+                                            {Object.entries(options.niches).map(([key, value]) => (
+                                                <SelectItem key={key} value={key}>
+                                                    {value}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -81,10 +86,11 @@ export default function Preferences({ user }: Props) {
                                             <SelectValue placeholder="Select a tone" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="casual">Casual & Friendly</SelectItem>
-                                            <SelectItem value="professional">Professional</SelectItem>
-                                            <SelectItem value="reflective">Reflective</SelectItem>
-                                            <SelectItem value="inspiring">Inspiring & Motivational</SelectItem>
+                                            {Object.entries(options.tones).map(([key, value]) => (
+                                                <SelectItem key={key} value={key}>
+                                                    {value}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
