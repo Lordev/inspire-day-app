@@ -23,3 +23,6 @@ exec:
 
 test:
 	docker compose -f docker-compose.yml -f docker-compose.test.yml run --rm laravel.app php artisan test
+
+migrate:
+	docker compose -f docker-compose.yml exec laravel.app php artisan migrate
