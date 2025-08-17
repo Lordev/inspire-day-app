@@ -24,9 +24,15 @@ class DashboardTest extends TestCase
         $this->get('/dashboard')->assertRedirect('/login');
     }
 
-    public function test_authenticated_users_can_visit_the_dashboard()
+    public function test_authenticated_users_can_access_dashboard_if_onboarded()
     {
-        $this->actingAs($user = User::factory()->create());
+        $this->actingAs(
+            $user = User::factory()->create([
+                'niche' => 'technology', // User has completed onboarding
+                'tone' => 'professional',
+            ])
+        );
+
         $this->get('/dashboard')->assertOk();
-    }
+}
 }
