@@ -9,9 +9,7 @@ Route::get('/', function () {
 })->name('home');
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('dashboard', [\App\Http\Controllers\PromptController::class, 'dashboard'])->name('dashboard')->middleware(EnsureUserIsOnboarded::class);
-    Route::get('onboarding', function () { 
-        return Inertia::render('onboarding'); 
-    })->name('onboarding');
+    Route::get('onboarding', [\App\Http\Controllers\PromptController::class, 'onboarding'])->name('onboarding');
     Route::get('preferences', [\App\Http\Controllers\PromptController::class, 'preferences'])->name('preferences');
     Route::post('preferences', [\App\Http\Controllers\PromptController::class, 'storePreferences'])->name('storePreferences');
     Route::post('prompt/{prompt}/response', [\App\Http\Controllers\PromptController::class, 'saveResponse'])->name('saveResponse');

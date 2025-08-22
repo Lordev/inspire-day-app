@@ -19,7 +19,7 @@ class EnsureUserIsOnboarded
         $user = Auth::user();
 
         // Check if the user is authenticated and has completed onboarding
-        if (!$user || !$user->niche || !$user->tone) {
+        if (!$user || is_null($user->niche) || is_null($user->tone)) {
             return redirect()->route('onboarding')->with('status', 'Please complete your onboarding to continue.');
         }
 

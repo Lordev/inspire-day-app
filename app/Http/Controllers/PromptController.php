@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Niche;
+use App\Enums\Tone;
 use Illuminate\Http\Request;
 use App\Services\PromptService;
 use App\Models\Prompt;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+
 
 class PromptController extends Controller
 {
@@ -35,19 +38,33 @@ class PromptController extends Controller
             'history' => $history,
         ]);
     }
+
+    public function onboarding()
+    {
+        return Inertia::render('onboarding', [
+            'options' => [
+                'niches' => Niche::options(),
+                'tones' => Tone::options(),
+            ],
+        ]);
+    }
     
     public function storePreferences(Request $request)
     {
+
         $validated = $request->validate([
-            'niche' => 'required|string|max:255',
-            'tone' => 'required|string|max:255',
+            'niche' => 'required|in:'.implode(',', array_keys(Niche::options())),
+            'tone' => 'required|in:'.implode(',', array_keys(Tone::options())),
         ]);
-        
+
         $user = Auth::user();
-        User::where('id', $user->id)->update([
+        
+        $user->update([
             'niche' => $validated['niche'],
             'tone' => $validated['tone'],
         ]);
+
+        Auth::setUser($user->fresh());
         
         return redirect()->route('dashboard')->with('status', 'Preferences updated!');
     }
@@ -67,6 +84,10 @@ class PromptController extends Controller
     {
         return Inertia::render('preferences', [
             'user' => Auth::user(),
+            'options' => [
+                'niches' => Niche::cases(),
+                'tones' => Tone::cases(),
+            ],
         ]);
     }
 }
