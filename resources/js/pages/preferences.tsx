@@ -34,18 +34,18 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Preferences({ user, options }: Props) {
     const { data, setData, post, processing } = useForm({
-        niche: user.niche || 'personal growth',
-        tone: user.tone || 'reflective',
+        niche: user.niche || options.niches[0],
+        tone: user.tone || options.tones[0],
     });
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         post(route('storePreferences'));
     };
-    
+
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Preferences" />
+        <>
+        <Head title="Preferences" />
             <div className="flex h-full flex-1 flex-col p-4">
                 <Card className="max-w-lg mx-auto">
                     <CardHeader>
@@ -67,7 +67,7 @@ export default function Preferences({ user, options }: Props) {
                                         </SelectTrigger>
                                         <SelectContent>
                                             {Object.entries(options.niches).map(([key, value]) => (
-                                                <SelectItem key={key} value={key}>
+                                                <SelectItem key={key} value={value}>
                                                     {value}
                                                 </SelectItem>
                                             ))}
@@ -87,7 +87,7 @@ export default function Preferences({ user, options }: Props) {
                                         </SelectTrigger>
                                         <SelectContent>
                                             {Object.entries(options.tones).map(([key, value]) => (
-                                                <SelectItem key={key} value={key}>
+                                                <SelectItem key={key} value={value}>
                                                     {value}
                                                 </SelectItem>
                                             ))}
@@ -107,6 +107,6 @@ export default function Preferences({ user, options }: Props) {
                     </CardFooter>
                 </Card>
             </div>
-        </AppLayout>
+        </>
     );
 }
