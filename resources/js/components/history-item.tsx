@@ -1,21 +1,27 @@
 import { Prompt } from '@/types';
 import { motion } from 'framer-motion';
-import { Pencil } from 'lucide-react';
+import { Eye, Pencil } from 'lucide-react';
 import { Button } from './ui/button';
 import { useAtom } from 'jotai';
 import { currentPromptAtom } from '@/lib/atoms';
+import { useState } from 'react';
+import ReflectionModal from './reflection-modal';
 
 interface HistoryItemProps {
     item: Prompt;
-    processing: boolean;
     index: number;
 }
 
 export default function HistoryItem({ item, index }: HistoryItemProps) {
     const [, setCurrentPrompt] = useAtom(currentPromptAtom);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleEdit = (item: Prompt) => {
         setCurrentPrompt(item);
+    };
+
+    const handleViewReflection = () => {
+        setIsModalOpen(true);
     };
 
     return (
@@ -23,21 +29,33 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
             <div
                 className={`rounded-lg p-3 transition-all ${item.status === 'answered' ? 'border border-green-100 bg-gradient-to-r from-blue-50 to-green-50' : 'border border-slate-200 bg-slate-50'}`}
             >
-                <div className="mb-1 flex items-start justify-between">
+                <div className="mb-1 flex items-center justify-between">
                     <p className="text-sm font-medium text-slate-700">{item.date}</p>
                     <div className="flex items-center">
-                        {item.status === 'answered' ? (
-                            <span className="mr-1 inline-flex h-2 w-2 rounded-full bg-green-500" title="Completed"></span>
-                        ) : (
-                            <span className="mr-1 inline-flex h-2 w-2 rounded-full bg-amber-500" title="Pending"></span>
-                        )}
+                        <Button 
+                            variant="ghost"
+                            size="icon"
+                            aria-label="View journal"
+                            disabled={item.status !== 'answered'}
+                            className={item.status !== 'answered' ? 'opacity-50' : ''}
+                            onClick={item.status === 'answered' ? handleViewReflection : undefined}
+                            title="View journal"
+                            >
+                            <Eye size={18} />
+                        </Button>
                         <Button
                             variant="ghost"
+                            size="icon"
                             aria-label="Edit journal"
                             onClick={() => {handleEdit(item);}}
                         >
                             <Pencil size={14} />
                         </Button>
+                        {item.status === 'answered' ? (
+                            <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-green-500" title="Completed"></span>
+                        ) : (
+                            <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-amber-500" title="Pending"></span>
+                        )}
                     </div>
                 </div>
                 <p className="line-clamp-2 text-sm text-slate-600">"{item.prompt}"</p>
@@ -47,6 +65,12 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
                     </p>
                 )}
             </div>
+            
+            <ReflectionModal 
+                prompt={item}
+                open={isModalOpen}
+                onOpenChange={setIsModalOpen}
+            />
         </motion.div>
     );
 }
