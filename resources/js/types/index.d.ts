@@ -41,3 +41,11 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface Prompt {
+    id: number;
+    prompt: string;
+    response: string | null;
+    date: string;
+    status: 'answered' | 'unanswered';
+}

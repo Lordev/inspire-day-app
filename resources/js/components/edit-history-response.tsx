@@ -3,14 +3,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
-interface Props {
+interface EditHistoryResponseProps {
     prompt: Prompt;
     history: Prompt[];
     onSave: (response: string) => void;
     processing: boolean;
 }
 
-export default function EditHistoryResponse({ prompt, onSave, processing }: Props) {
+export default function EditHistoryResponse({ prompt, onSave, processing }: EditHistoryResponseProps) {
     const [response, setResponse] = useState(prompt.response || "");
 
     const handleSubmit = (e) => {
@@ -28,6 +28,7 @@ export default function EditHistoryResponse({ prompt, onSave, processing }: Prop
             className="w-full"
         />
         <Button type="submit" disabled={processing}>Save Response</Button>
+        <Button variant="outline" disabled={processing}>Cancel</Button>
         </form>
     );
 }
