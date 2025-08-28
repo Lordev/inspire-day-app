@@ -8,6 +8,7 @@ import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { fadeInLeft, fadeInUp } from '@/utils/animations';
 
 type RegisterForm = {
     name: string;
@@ -34,8 +35,7 @@ export default function Register() {
     return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <Head title="Register" />
-            
-            {/* Background Shapes */}
+
             <div className="absolute inset-0 overflow-hidden">
                 <motion.div 
                     className="absolute top-10 right-[10%] w-32 h-32 rounded-full bg-blue-100 opacity-40"
@@ -73,9 +73,7 @@ export default function Register() {
                 <div className="text-center">
                     <motion.h1 
                         className="text-4xl font-bold text-gray-900 mb-2"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2, duration: 0.6 }}
+                        {...fadeInUp(0.2)}
                     >
                         Join{' '}
                         <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-violet-600">
@@ -84,9 +82,7 @@ export default function Register() {
                     </motion.h1>
                     <motion.p 
                         className="text-gray-600 text-lg"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3, duration: 0.6 }}
+                        {...fadeInUp(0.3)}
                     >
                         Start your mindful reflection journey today
                     </motion.p>
@@ -102,9 +98,7 @@ export default function Register() {
                         <div className="space-y-6">
                             <motion.div 
                                 className="space-y-2"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.5, duration: 0.5 }}
+                                {...fadeInLeft(0.5)}
                             >
                                 <Label htmlFor="name" className="text-gray-700 font-medium">Name</Label>
                                 <Input
@@ -124,9 +118,7 @@ export default function Register() {
 
                             <motion.div 
                                 className="space-y-2"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.6, duration: 0.5 }}
+                                {...fadeInLeft(0.6)}
                             >
                                 <Label htmlFor="email" className="text-gray-700 font-medium">Email address</Label>
                                 <Input
@@ -145,9 +137,7 @@ export default function Register() {
 
                             <motion.div 
                                 className="space-y-2"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.7, duration: 0.5 }}
+                                {...fadeInLeft(0.7)}
                             >
                                 <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
                                 <Input
@@ -166,9 +156,7 @@ export default function Register() {
 
                             <motion.div 
                                 className="space-y-2"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.8, duration: 0.5 }}
+                                {...fadeInLeft(0.8)}
                             >
                                 <Label htmlFor="password_confirmation" className="text-gray-700 font-medium">Confirm password</Label>
                                 <Input
@@ -186,9 +174,8 @@ export default function Register() {
                             </motion.div>
 
                             <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.9, duration: 0.5 }}
+                                {...fadeInUp(0.9)}
+                                className="flex justify-center"
                             >
                                 <Button 
                                     type="submit"
@@ -203,9 +190,7 @@ export default function Register() {
 
                         <motion.div 
                             className="text-center text-gray-600"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 1.0, duration: 0.5 }}
+                            {...fadeInUp(1.0)}
                         >
                             Already have an account?{' '}
                             <TextLink 
@@ -221,14 +206,12 @@ export default function Register() {
 
                 <motion.div 
                     className="text-center text-sm text-gray-500"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.1, duration: 0.5 }}
+                    {...fadeInUp(1.1)}
                 >
                     By creating an account, you agree to our{' '}
-                    <a href="/terms" className="text-blue-600 hover:text-blue-700 transition-colors">Terms of Service</a>
+                    <TextLink href="/terms">Terms of Service</TextLink>
                     {' '}and{' '}
-                    <a href="/privacy" className="text-blue-600 hover:text-blue-700 transition-colors">Privacy Policy</a>
+                    <TextLink href="/privacy">Privacy Policy</TextLink>
                 </motion.div>
             </motion.div>
         </div>
