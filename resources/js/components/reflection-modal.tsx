@@ -35,7 +35,7 @@ export default function ReflectionModal({ prompt, open, onOpenChange }: Reflecti
                         </Blockquote>
                     </Section>
 
-                    <Section className="mb-8 bg-accent">
+                    <Section className="mb-8">
                         <SubHeading className="mb-2">Your Reflection</SubHeading>
                         <Blockquote>
                             {prompt.response}
