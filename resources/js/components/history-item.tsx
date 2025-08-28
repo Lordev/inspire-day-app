@@ -6,6 +6,7 @@ import { useAtom } from 'jotai';
 import { currentPromptAtom } from '@/lib/atoms';
 import { useState } from 'react';
 import ReflectionModal from './reflection-modal';
+import { Flex } from '@radix-ui/themes';
 
 interface HistoryItemProps {
     item: Prompt;
@@ -26,12 +27,10 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
 
     return (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.1 * index }}>
-            <div
-                className={`rounded-lg p-3 transition-all ${item.status === 'answered' ? 'border border-green-100 bg-gradient-to-r from-blue-50 to-green-50' : 'border border-slate-200 bg-slate-50'}`}
-            >
-                <div className="mb-1 flex items-center justify-between">
+            <Flex direction="column" className={`rounded-lg p-3 transition-all ${item.status === 'answered' ? 'border border-green-100 bg-gradient-to-r from-blue-50 to-green-50' : 'border border-slate-200 bg-slate-50'}`}>
+                <Flex align="center" justify="between" className="mb-1">
                     <p className="text-sm font-medium text-slate-700">{item.date}</p>
-                    <div className="flex items-center">
+                    <Flex align="center" >
                         <Button 
                             variant="ghost"
                             size="icon"
@@ -40,7 +39,7 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
                             className={item.status !== 'answered' ? 'opacity-50' : ''}
                             onClick={item.status === 'answered' ? handleViewReflection : undefined}
                             title="View journal"
-                            >
+                        >
                             <Eye size={18} />
                         </Button>
                         <Button
@@ -56,16 +55,15 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
                         ) : (
                             <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-amber-500" title="Pending"></span>
                         )}
-                    </div>
-                </div>
+                    </Flex>
+                </Flex>
                 <p className="line-clamp-2 text-sm text-slate-600">"{item.prompt}"</p>
                 {item.response && (
                     <p className="mt-1 line-clamp-1 text-xs text-slate-500">
                         {item.response.length > 60 ? `${item.response.substring(0, 60)}...` : item.response}
                     </p>
                 )}
-            </div>
-            
+            </Flex>
             <ReflectionModal 
                 prompt={item}
                 open={isModalOpen}

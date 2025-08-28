@@ -1,13 +1,14 @@
 import * as React from "react"
+import { VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+function Card({ className, ...props }: React.ComponentProps<"div"> & VariantProps<typeof cardHeaderStyles>) {
   return (
     <div
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        "text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
         className
       )}
       {...props}
@@ -15,14 +16,19 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+function CardHeader({ className, children, ...props }: React.ComponentProps<"div"> & VariantProps<typeof cardHeaderVariant>) {
   return (
     <div
       data-slot="card-header"
-      className={cn("flex flex-col gap-1.5 px-6", className)}
+      className={cn(
+        children ? "text-card-foreground p-6" : "",
+        className
+      )}
       {...props}
-    />
-  )
+    >
+      {children}
+    </div>
+  );
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {

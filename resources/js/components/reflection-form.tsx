@@ -1,16 +1,18 @@
 import { Button } from '@/components/ui/button';
 import { TextArea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import { SendHorizontal } from 'lucide-react';
 import { FormEvent, useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
 import { Prompt } from '@/types';
+import { Flex } from '@radix-ui/themes';
 
 interface ReflectionFormProps {
     prompt: Prompt
 }
 
 
-export default function ReflectionForm({prompt} : ReflectionFormProps) {
+export default function ReflectionForm({prompt} : ReflectionFormProps) { 
     const { data, setData, post, processing } = useForm({
         response: prompt.response || '',
     });
@@ -29,10 +31,10 @@ export default function ReflectionForm({prompt} : ReflectionFormProps) {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <label htmlFor="response" className="mb-2 block text-sm font-medium text-slate-700">
+            <Flex direction="column" gap="2">
+                <Label htmlFor="response">
                     Your Reflection:
-                </label>
+                </Label>
                 <TextArea
                     id="response"
                     name="response"
@@ -42,13 +44,13 @@ export default function ReflectionForm({prompt} : ReflectionFormProps) {
                     required
                     className="min-h-[180px] resize-y text-base"
                 />
-            </div>
-            <div className="flex justify-end">
+            </Flex>
+            <Flex justify="end">
                 <Button type="submit" disabled={processing}>
                     {processing ? 'Saving...' : 'Save Reflection'}
                     {!processing && <SendHorizontal size={18} />}
                 </Button>
-            </div>
+            </Flex>
         </form>
     );
 }

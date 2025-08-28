@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { Heading } from '@/components/ui/heading';
+import { Heading, Flex } from '@radix-ui/themes';
 import { Settings } from 'lucide-react';
+
 
 export default function DashboardHeader() {
     return (
-        <div className="mb-6 flex items-center justify-between">
+        <Flex align="center" justify="between" className="mb-6">
             <Heading variant="accent" size="lg" weight="bold">
                 Daily Reflection
             </Heading>
@@ -14,6 +15,6 @@ export default function DashboardHeader() {
                     <span className="hidden sm:inline">Preferences</span>
                 </a>
             </Button>
-        </div>
+        </Flex>
     );
 }

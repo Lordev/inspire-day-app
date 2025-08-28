@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
-import { Heading } from '@/components/ui/heading';
+import { Heading, Flex } from '@radix-ui/themes';
 import { Prompt } from '@/types';
 import { motion } from 'framer-motion';
 import { CalendarDays } from 'lucide-react';
@@ -10,8 +10,6 @@ interface HistorySidebarProps {
     history: Prompt[];
 }
 
-
-
 export default function HistorySidebar({ history }: HistorySidebarProps) {
     return (
         <motion.div
@@ -20,28 +18,28 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
         >
-            <Card className="h-full border-slate-200 shadow-md">
-                <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-indigo-50 to-purple-50">
-                    <div className="flex items-center gap-2">
-                        <CalendarDays size={18} className="text-indigo-600" />
+            <Card>
+                <CardHeader>
+                    <Flex align="center" gap="2">
+                        <CalendarDays size={18} />
                         <Heading asChild size="md" className="text-lg">
                             <span>Previous Reflections</span>
                         </Heading>
-                    </div>
+                    </Flex>
                     <CardDescription>Your reflection journey</CardDescription>
                 </CardHeader>
                 <CardContent className="max-h-[500px] overflow-y-auto p-4">
                     {history.length > 0 ? (
-                        <div className="space-y-3">
+                        <Flex direction="column" gap="3">
                             {history.map((item, index) => (
                                 <HistoryItem key={item.id} item={item} index={index} />
                             ))}
-                        </div>
+                        </Flex>
                     ) : (
-                        <div className="py-8 text-center">
+                        <Flex direction="column" align="center" className="py-8 text-center">
                             <p className="text-slate-500">No previous reflections yet</p>
                             <p className="mt-1 text-sm text-slate-400">Your history will appear here</p>
-                        </div>
+                        </Flex>
                     )}
                 </CardContent>
                 {history.length > 4 && (
