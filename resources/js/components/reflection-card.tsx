@@ -1,4 +1,4 @@
-import ReflectionForm from '@/components/reflection-form';
+import ReflectionEditor from './reflection-editor';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { currentPromptAtom } from '@/lib/atoms';
 import { Prompt } from '@/types';
@@ -52,7 +52,7 @@ export default function ReflectionCard({ prompt }: ReflectionCardProps) {
                 </CardHeader>
                 <CardContent className="flex flex-col gap-6 p-6 h-full">
                     <Blockquote>"{activePrompt.prompt}"</Blockquote>
-                    <ReflectionForm prompt={activePrompt} />
+                    <ReflectionEditor prompt={activePrompt} />
                 </CardContent>
             </Card>
         </motion.section>
