@@ -7,7 +7,7 @@ export interface BlockquoteProps extends React.HTMLAttributes<HTMLQuoteElement> 
 function Blockquote({ children, className = '', ...props }: BlockquoteProps) {
   return (
     <blockquote
-      className={`italic text-muted-foreground bg-accent p-8 border-l-0 ${className}`}
+      className={`italic text-muted-foreground bg-zinc-100 p-8 border-l-0 ${className}`}
       {...props}
     >
       {children}

@@ -22,7 +22,7 @@ export default function ReflectionCard({ prompt }: ReflectionCardProps) {
 
     if (!activePrompt) {
         return (
-            <motion.section className="lg:col-span-2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <motion.section className="lg:col-span-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <Card>
                     <CardContent className="p-6">
                         <CardDescription as="p">No prompt available at the moment. Please try again later.</CardDescription>
@@ -33,11 +33,11 @@ export default function ReflectionCard({ prompt }: ReflectionCardProps) {
     }
 
     return (
-        <motion.section className="lg:col-span-2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <Card variant={status}>
-                <CardHeader variant={status}>
-                    <Flex direction="row" justify="between" align="start" gap="2">
-                        <Flex direction="column" gap="4">
+        <motion.section className="lg:col-span-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <Card className="h-full">
+                <CardHeader >
+                    <Flex direction="row" justify="between" align="start">
+                        <Flex direction="column" gap="2">
                             <CardTitle as="h2">Today's Reflection </CardTitle>
                             <CardDescription as="p">{formatDate(new Date())} </CardDescription>
                         </Flex>
@@ -50,7 +50,7 @@ export default function ReflectionCard({ prompt }: ReflectionCardProps) {
                         </Badge>
                     </Flex>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-6 p-6">
+                <CardContent className="flex flex-col gap-6 p-6 h-full">
                     <Blockquote>"{activePrompt.prompt}"</Blockquote>
                     <ReflectionForm prompt={activePrompt} />
                 </CardContent>

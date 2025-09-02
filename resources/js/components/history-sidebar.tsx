@@ -18,7 +18,7 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
         >
-            <Card>
+            <Card className="pb-1">
                 <CardHeader>
                     <Flex align="center" gap="2">
                         <CalendarDays size={18} />
@@ -28,9 +28,9 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
                     </Flex>
                     <CardDescription>Your reflection journey</CardDescription>
                 </CardHeader>
-                <CardContent className="max-h-[500px] overflow-y-auto p-4">
+                <CardContent className="overflow-y-auto p-4">
                     {history.length > 0 ? (
-                        <Flex direction="column" gap="3">
+                        <Flex direction="column" className="max-h-[70vh] overflow-y-auto" gap="3">
                             {history.map((item, index) => (
                                 <HistoryItem key={item.id} item={item} index={index} />
                             ))}
@@ -42,13 +42,6 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
                         </Flex>
                     )}
                 </CardContent>
-                {history.length > 4 && (
-                    <CardFooter className="border-t border-slate-100 bg-slate-50 px-4 py-3">
-                        <Button variant="outline" size="sm" className="w-full">
-                            View All Reflections
-                        </Button>
-                    </CardFooter>
-                )}
             </Card>
         </motion.div>
     );
