@@ -6,20 +6,19 @@ import { FormEvent } from 'react';
 import { Label } from '@/components/ui/label';
 import { motion } from 'framer-motion';
 import { Flex } from '@radix-ui/themes';
+import AppLayout from '@/layouts/app-layout';
+import { options, User } from '@/types';
 
 interface Props {
-    user: {
-        id: number;
-        name: string;
-        email: string;
-        niche: string | null;
-        tone: string | null;
-    };
-    options: {
-        niches: Record<string, string>;
-        tones: Record<string, string>;
-    };
+    user: User;
+    options: options
 }
+
+const breadcrumbs = [
+    { label: 'Home', url: '/' },
+    { label: 'Preferences', url: '/preferences' },
+];
+
 
 export default function PreferencesPage({ user, options }: Props) {
     const { data, setData, post, processing } = useForm({
@@ -33,7 +32,7 @@ export default function PreferencesPage({ user, options }: Props) {
     };
 
     return (
-        <>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Preferences" />
             <div className="mx-auto flex h-full max-w-5xl flex-1 flex-col overflow-x-auto p-4 md:p-6">
                 <motion.div
@@ -116,6 +115,6 @@ export default function PreferencesPage({ user, options }: Props) {
                     </Card>
                 </motion.div>
             </div>
-        </>
+            </AppLayout>
     );
 }

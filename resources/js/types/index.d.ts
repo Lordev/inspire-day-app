@@ -35,11 +35,13 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    avatar?: string;
-    email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
+    niche: string | null;
+    tone: string | null;
+}
+
+export interface Options {
+    niches: Record<string, string>;
+    tones: Record<string, string>;
 }
 
 export interface Prompt {
@@ -49,3 +51,4 @@ export interface Prompt {
     date: string;
     status: 'answered' | 'unanswered';
 }
+
