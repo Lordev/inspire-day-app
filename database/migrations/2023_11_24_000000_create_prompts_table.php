@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('response')->nullable();
             $table->date('date');
             $table->string('status')->default('unanswered');
+            $table->text('analysis')->nullable();
             $table->timestamps();
         });
     }

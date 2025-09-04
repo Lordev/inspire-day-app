@@ -114,4 +114,47 @@ class PromptService
     {
         return $this->promptRepository->saveResponse($prompt, $response);
     }
+
+    public function analyzeResponse(string $prompt, string $response): string
+    {
+        try {
+            $aiResponse = Http::timeout(30)->post(env('AI_SERVICE_URL') . '/analyze', [
+                'prompt' => $prompt,
+                'response' => $response,
+            ]);
+
+            Log::info('AI Analysis Response', [
+                'status' => $aiResponse->status(),
+                'body' => $aiResponse->body(),
+                'url' => env('AI_SERVICE_URL') . '/analyze'
+            ]);
+
+            if (!$aiResponse->successful()) {
+                Log::error('AI Analysis failed', [
+                    'status' => $aiResponse->status(),
+                    'body' => $aiResponse->body()
+                ]);
+                throw new \Exception('Failed to analyze response');
+            }
+
+            $analysis = $aiResponse->json('output');
+            
+            if (empty($analysis)) {
+                Log::warning('AI Service returned empty analysis', [
+                    'response' => $aiResponse->json()
+                ]);
+                throw new \Exception('No analysis received from AI service');
+            }
+
+            return $analysis;
+
+        } catch (\Exception $e) {
+            Log::error('AI Analysis connection failed', [
+                'error' => $e->getMessage(),
+                'url' => env('AI_SERVICE_URL') . '/analyze'
+            ]);
+            
+            throw $e;
+        }
+    }
 }

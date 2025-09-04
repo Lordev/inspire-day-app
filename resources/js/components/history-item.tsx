@@ -3,10 +3,10 @@ import { Prompt } from '@/types';
 import { Flex } from '@radix-ui/themes';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
-import { Eye } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import CalendarDate from './calendar-date';
-import ReflectionModal from './reflection-modal';
+import ReflectionModal from './analysis-modal';
 import { Button } from './ui/button';
 import { useEffect } from 'react';
 import { Link } from '@inertiajs/react';
@@ -58,14 +58,15 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    aria-label="View journal"
+                                    aria-label="Analyze reflection"
                                     disabled={item.status !== 'answered'}
                                     className={item.status !== 'answered' ? 'opacity-50' : ''}
                                     onClick={item.status === 'answered' ? handleViewReflection : undefined}
-                                    title="View journal"
+                                    title="Analyze reflection"
                                 >
-                                    <Eye size={18} />
+                                    <Sparkles size={18} />
                                 </Button>
+
                                 {item.status === 'answered' ? (
                                     <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-green-500" title="Completed"></span>
                                 ) : (
@@ -82,7 +83,7 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
                     </Flex>
                 </Flex>
             </Link>
-            <ReflectionModal prompt={item} open={isModalOpen} onOpenChange={setIsModalOpen} />
+            <ReflectionModal prompt={item} isModalOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </motion.div>
     );
 }

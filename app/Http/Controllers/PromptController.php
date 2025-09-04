@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\PromptService;
 use App\Models\Prompt;
 use App\Models\User;
+use App\Services\StatisticsService;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,4 +91,24 @@ class PromptController extends Controller
             ],
         ]);
     }
+    
+    public function analyze(Request $request, Prompt $prompt)
+    {
+        $validated = $request->validate([
+            'response' => 'required|string',
+        ]);
+
+        try {
+            $analysis = $this->promptService->analyzeResponse(
+                $prompt->prompt,
+                $validated['response']
+            );
+
+            $prompt->update(['analysis' => $analysis]);
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['analysis' => 'Failed to analyze response. Please try again.']);
+        }
+    }
+
 }

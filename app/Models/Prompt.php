@@ -15,6 +15,7 @@ class Prompt extends Model
         'response',
         'date',
         'status',
+        'analysis',
     ];
 
     public function user()
