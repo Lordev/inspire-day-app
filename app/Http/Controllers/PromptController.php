@@ -111,4 +111,18 @@ class PromptController extends Controller
         }
     }
 
+    public function getStatistics(Request $request, StatisticsService $statisticsService)
+    {
+        $user = $request->user();
+        
+        $stats = $statisticsService->getUserStatistics($user);
+        $trends = $statisticsService->getReflectionTrends($user);
+        $insights = $statisticsService->getAnalysisInsights($user->id);
+
+        return Inertia::render('statistics', [
+            'statistics' => $stats,
+            'trends' => $trends,
+            'insights' => $insights,
+        ]);
+    }
 }

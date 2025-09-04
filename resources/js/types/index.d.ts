@@ -50,5 +50,22 @@ export interface Prompt {
     response: string | null;
     date: string;
     status: 'answered' | 'unanswered';
+    analysis?: string | null;
+}
+
+export interface StatisticsData {
+    statistics: {
+        totalReflections: number
+        averageReflectionLength: number
+        mostActiveDay: string | null
+    }
+    trends: {
+        total_reflections: number
+        recent_reflections: number
+    }
+    insights: Array<{
+        prompt_id: number
+        analysis: string
+    }>
 }
 

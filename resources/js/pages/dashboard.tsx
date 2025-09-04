@@ -22,7 +22,7 @@ export default function Dashboard({ prompt, history }: Props) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Daily Reflection" />
             <div className="mx-auto flex flex-col px-4 md:px-6">
-                <DashboardHeader />
+                <DashboardHeader title='Daily Reflection' />
                 <div className="grid min-h-0 flex-1 grid-cols-3 gap-6 lg:grid-cols-4 overflow-hidden">
                     <HistorySidebar history={history} />
                     <ReflectionCard prompt={prompt} />
