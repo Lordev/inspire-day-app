@@ -1,17 +1,23 @@
-import { Head, useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { FormEvent } from 'react';
-import { Label } from '@/components/ui/label';
-import { motion } from 'framer-motion';
-import { Flex } from '@radix-ui/themes';
 import AppLayout from '@/layouts/app-layout';
 import { options, User } from '@/types';
+import { Head, useForm } from '@inertiajs/react';
+import { Flex } from '@radix-ui/themes';
+import { motion } from 'framer-motion';
+import { FormEvent, useState } from 'react';
+import DashboardHeader from '@/components/dashboard-header';
+import ReflectionPreferences from '@/components/preferences/reflection-preferences';
+import ProfileSettings from '@/components/preferences/profile-settings';
+import PasswordSettings from '@/components/preferences/password-settings';
+import DangerZone from '@/components/preferences/danger-zone';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Settings, User as UserIcon, Lock, AlertTriangle } from 'lucide-react';
 
 interface Props {
     user: User;
-    options: options
+    options: options;
+    mustVerifyEmail?: boolean;
+    status?: string;
 }
 
 const breadcrumbs = [
@@ -19,102 +25,142 @@ const breadcrumbs = [
     { label: 'Preferences', url: '/preferences' },
 ];
 
-
-export default function PreferencesPage({ user, options }: Props) {
-    const { data, setData, post, processing } = useForm({
+export default function PreferencesPage({ user, options, mustVerifyEmail, status }: Props) {
+    const { data: reflectionData, setData: setReflectionData, post: postReflection, processing: reflectionProcessing } = useForm({
         niche: user.niche || Object.values(options.niches)[0],
         tone: user.tone || Object.values(options.tones)[0],
     });
 
-    const handleSubmit = (e: FormEvent) => {
+    const { data: profileData, setData: setProfileData, patch: patchProfile, errors: profileErrors, processing: profileProcessing, recentlySuccessful: profileSuccess } = useForm({
+        name: user.name,
+        email: user.email,
+    });
+
+    const { data: passwordData, setData: setPasswordData, put: putPassword, errors: passwordErrors, processing: passwordProcessing, recentlySuccessful: passwordSuccess, reset: resetPassword } = useForm({
+        current_password: '',
+        password: '',
+        password_confirmation: '',
+    });
+
+    const { delete: deleteAccount, processing: deleteProcessing } = useForm();
+
+    const handleReflectionSubmit = (e: FormEvent) => {
         e.preventDefault();
-        post(route('storePreferences'));
+        postReflection(route('storePreferences'));
+    };
+
+    const handleProfileSubmit = () => {
+        patchProfile(route('profile.update'), {
+            preserveScroll: true,
+        });
+    };
+
+    const handlePasswordSubmit = () => {
+        putPassword(route('password.update'), {
+            preserveScroll: true,
+            onSuccess: () => resetPassword(),
+            onError: (errors) => {
+                if (errors.password) {
+                    resetPassword('password', 'password_confirmation');
+                }
+                if (errors.current_password) {
+                    resetPassword('current_password');
+                }
+            },
+        });
+    };
+
+
+    const handleDeleteAccount = () => {
+        deleteAccount(route('profile.destroy'), {
+            preserveScroll: true,
+        });
     };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Preferences" />
-            <div className="mx-auto flex h-full max-w-5xl flex-1 flex-col overflow-x-auto p-4 md:p-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <Card className="overflow-hidden border-slate-200 shadow-md max-w-md mx-auto">
-                        <CardHeader className="border-b border-slate-100">
-                            <Flex direction="row" align="start">
-                                <div>
-                                    <CardTitle className="text-xl text-slate-800">Customize Your Experience</CardTitle>
-                                    <CardDescription>Personalize your daily reflection prompts</CardDescription>
-                                </div>
-                            </Flex>
-                        </CardHeader>
+            <div className="flex flex-col px-4 md:px-6 h-full">
+                <DashboardHeader title='Settings & Preferences'/>
+                <div className="flex h-full max-w-5xl flex-1 flex-col overflow-hidden">
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }} 
+                        animate={{ opacity: 1, y: 0 }} 
+                        transition={{ duration: 0.5 }}
+                        className="flex-1 flex flex-col"
+                    >
+                        <Tabs defaultValue="reflection" className="flex-1 flex flex-col">
+                            <TabsList className="grid w-full grid-cols-4 gap-2 mb-6">
+                                <TabsTrigger value="reflection" className="flex items-center gap-2 justify-center">
+                                    <Settings className="h-4 w-4" />
+                                    <span className="hidden sm:inline">Reflection</span>
+                                </TabsTrigger>
+                                <TabsTrigger value="profile" className="flex items-center gap-2 justify-center">
+                                    <UserIcon className="h-4 w-4" />
+                                    <span className="hidden sm:inline">Profile</span>
+                                </TabsTrigger>
+                                <TabsTrigger value="password" className="flex items-center gap-2 justify-center">
+                                    <Lock className="h-4 w-4" />
+                                    <span className="hidden sm:inline">Password</span>
+                                </TabsTrigger>
+                                <TabsTrigger value="danger" className="flex items-center gap-2 justify-center">
+                                    <AlertTriangle className="h-4 w-4" />
+                                    <span className="hidden sm:inline">Account</span>
+                                </TabsTrigger>
+                            </TabsList>
 
-                        <CardContent className="p-6">
-                            <form onSubmit={handleSubmit} id="preferences-form">
-                                <Flex direction="column" gap="6">
-                                    <Flex direction="column" gap="3">
-                                        <Label htmlFor="niche" className="text-sm font-medium text-slate-700">Topic Focus</Label>
-                                        <Select 
-                                            name="niche"
-                                            value={data.niche}
-                                            onValueChange={(value) => setData('niche', value)}
-                                        >
-                                            <SelectTrigger className="border-slate-200">
-                                                <SelectValue placeholder="Select a topic focus" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {Object.entries(options.niches).map(([key, value]) => (
-                                                    <SelectItem key={key} value={value}>
-                                                        {value}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        <p className="text-xs text-slate-500">This will influence the types of prompts you receive</p>
-                                    </Flex>
-                                    
-                                    <Flex direction="column" gap="3">
-                                        <Label htmlFor="tone" className="text-sm font-medium text-slate-700">Reflection Style</Label>
-                                        <Select 
-                                            name="tone"
-                                            value={data.tone}
-                                            onValueChange={(value) => setData('tone', value)}
-                                        >
-                                            <SelectTrigger className="border-slate-200">
-                                                <SelectValue placeholder="Select a reflection style" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {Object.entries(options.tones).map(([key, value]) => (
-                                                    <SelectItem key={key} value={value}>
-                                                        {value}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        <p className="text-xs text-slate-500">The tone and approach of your daily prompts</p>
-                                    </Flex>
-                                </Flex>
-                            </form>
-                        </CardContent>
+                            <div className="flex-1 overflow-auto">
+                                <TabsContent value="reflection" className="mt-0 h-full">
+                                    <ReflectionPreferences
+                                        niche={reflectionData.niche}
+                                        tone={reflectionData.tone}
+                                        nicheOptions={options.niches}
+                                        toneOptions={options.tones}
+                                        onNicheChange={(value) => setReflectionData('niche', value)}
+                                        onToneChange={(value) => setReflectionData('tone', value)}
+                                        onSubmit={handleReflectionSubmit}
+                                    />
+                                </TabsContent>
 
-                        <CardFooter className="border-t px-6 py-4">
-                            <Flex direction="row" justify="between" gap="3" className="w-full">
-                                <Button variant="outline" asChild>
-                                    <a href={route('dashboard')}>Cancel</a>
-                                </Button>
-                                <Button 
-                                    type="submit" 
-                                    form="preferences-form" 
-                                    disabled={processing}
-                                >
-                                    {processing ? 'Saving...' : 'Save Preferences'}
-                                </Button>
-                            </Flex>
-                        </CardFooter>
-                    </Card>
-                </motion.div>
+                                <TabsContent value="profile" className="mt-0 h-full p-2">
+                                    <ProfileSettings
+                                        name={profileData.name}
+                                        email={profileData.email}
+                                        onNameChange={(value) => setProfileData('name', value)}
+                                        onEmailChange={(value) => setProfileData('email', value)}
+                                        onSubmit={handleProfileSubmit}
+                                        processing={profileProcessing}
+                                        recentlySuccessful={profileSuccess}
+                                        errors={profileErrors}
+                                    />
+                                </TabsContent>
+
+                                <TabsContent value="password" className="mt-0 h-full p-2">
+                                    <PasswordSettings
+                                        currentPassword={passwordData.current_password}
+                                        password={passwordData.password}
+                                        passwordConfirmation={passwordData.password_confirmation}
+                                        onCurrentPasswordChange={(value) => setPasswordData('current_password', value)}
+                                        onPasswordChange={(value) => setPasswordData('password', value)}
+                                        onPasswordConfirmationChange={(value) => setPasswordData('password_confirmation', value)}
+                                        onSubmit={handlePasswordSubmit}
+                                        processing={passwordProcessing}
+                                        recentlySuccessful={passwordSuccess}
+                                        errors={passwordErrors}
+                                    />
+                                </TabsContent>
+
+                                <TabsContent value="danger" className="mt-0 h-full p-2">
+                                    <DangerZone
+                                        onDeleteAccount={handleDeleteAccount}
+                                        processing={deleteProcessing}
+                                    />
+                                </TabsContent>
+                            </div>
+                        </Tabs>
+                    </motion.div>
+                </div>
             </div>
-            </AppLayout>
+        </AppLayout>
     );
 }

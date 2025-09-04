@@ -122,9 +122,9 @@ export default function ReflectionEditor() {
 
     return (
         <form className="h-full space-y-4" onSubmit={handleSave}>
-            <Flex direction="column" gap="2" className="h-full">
+            <Flex direction="column" gap="2" className="">
                 <Label htmlFor="response">Your Reflection:</Label>
-                <div className="h-full rounded-md border bg-white">
+                <div className="rounded-md border bg-white">
                     <ReflectionToolbar
                         editor={editor}
                         editorState={editorState}
@@ -140,14 +140,15 @@ export default function ReflectionEditor() {
                             {processing ? 'Saving...' : 'Save Reflection'}
                         </Button>
                     </div>
-                    <div className="p-3">
-                        <div className="rounded-md bg-white p-3">
+                    <div className="p-3s">
+                        <div className="rounded-md bg-white p-3  overflow-hidden">
                             <DragHandle editor={editor}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
                                 </svg>
                             </DragHandle>
-                            <EditorContent editor={editor} className="prose min-h-[160px] max-w-full focus:outline-none" />
+                            <EditorContent editor={editor} className="prose 
+                            h-[400px] max-w-full focus:outline-none overflow-y-scroll" />
                         </div>
                     </div>
 
