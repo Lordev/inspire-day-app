@@ -23,6 +23,7 @@ classDiagram
         +string response
         +date date
         +string status
+        +string analysis
         +created_at
         +updated_at
         +isAnswered()
@@ -39,19 +40,32 @@ classDiagram
         +generatePromptForUser(user)
         +getTodaysPrompt(user)
         +savePrompt(user, prompt)
+        +getPromptHistory(user, limit)
         -getFallbackPrompt(string)
-        -openAIClient
+        -getFallbackPrompt()
+        +analyzeResponse()
         -promptRepository
+    }
+    class StatisticsService {
+        +getUserStatistics(user)
+        +getReflectionTrends(user)
+        +getAnalysisInsights(user)
     }
     class PromptController {
         +showDashboard()
+        +onBoarding()
+        +showStatistics()
         +storePreferences()
-        +showPromptHistory()
+        +saveResponses()
+        +preferences()
+        +analyze()
     }
     User "1" --> "many" Prompt : has
+    User "1" --> "1" StatisticsService : uses
     PromptService ..> User : uses
     PromptService ..> Prompt : manages
     PromptService ..> OpenAIClient : delegates
     PromptService ..> PromptRepository : delegates
     PromptController ..> PromptService : calls
+    PromptController ..> StatisticsService : calls
 ```
