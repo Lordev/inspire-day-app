@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
 
+
 class PromptController extends Controller
 {
     private $promptService;
@@ -77,6 +78,10 @@ class PromptController extends Controller
         ]);
         
         $this->promptService->saveResponse($prompt, $validated['response']);
+
+        if ($prompt->analysis) {
+            $prompt->update(['analysis' => null]);
+        }
         
         return redirect()->route('dashboard')->with('status', 'Response saved!');
     }
@@ -97,6 +102,7 @@ class PromptController extends Controller
         $validated = $request->validate([
             'response' => 'required|string',
         ]);
+
 
         try {
             $analysis = $this->promptService->analyzeResponse(

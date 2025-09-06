@@ -13,7 +13,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('preferences', [\App\Http\Controllers\PromptController::class, 'preferences'])->name('preferences');
     Route::post('preferences', [\App\Http\Controllers\PromptController::class, 'storePreferences'])->name('storePreferences');
     Route::post('prompt/{prompt}/response', [\App\Http\Controllers\PromptController::class, 'saveResponse'])->name('saveResponse');
-    Route::post('prompt/{prompt}/analyze', [\App\Http\Controllers\PromptController::class, 'analyze'])->name('analyzeResponse');
+    Route::post('prompt/{prompt}/analyze', [\App\Http\Controllers\PromptController::class, 'analyze'])
+    ->name('analyzeResponse')
+    ->middleware('throttle:analyze');
     Route::get('statistics', [\App\Http\Controllers\PromptController::class, 'getStatistics'])->name('getStatistics');
 });
 
