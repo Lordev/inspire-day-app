@@ -1,5 +1,4 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
 import { Heading, Flex } from '@radix-ui/themes';
 import { Prompt } from '@/types';
 import { motion } from 'framer-motion';
@@ -18,7 +17,7 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
         >
-            <Card className="pb-1">
+            <Card className="pb-1 h-full bg-card/80">
                 <CardHeader>
                     <Flex align="center" gap="2">
                         <CalendarDays size={18} />
@@ -30,15 +29,15 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
                 </CardHeader>
                 <CardContent className="overflow-y-auto p-4">
                     {history.length > 0 ? (
-                        <Flex direction="column" className="max-h-[70vh] overflow-y-auto" gap="3">
+                        <Flex direction="column" className="h-full overflow-y-auto" gap="3">
                             {history.map((item, index) => (
                                 <HistoryItem key={item.id} item={item} index={index} />
                             ))}
                         </Flex>
                     ) : (
                         <Flex direction="column" align="center" className="py-8 text-center">
-                            <p className="text-slate-500">No previous reflections yet</p>
-                            <p className="mt-1 text-sm text-slate-400">Your history will appear here</p>
+                            <p className="text-muted-foreground">No previous reflections yet</p>
+                            <p className="mt-1 text-sm text-muted-foreground/60">Your history will appear here</p>
                         </Flex>
                     )}
                 </CardContent>

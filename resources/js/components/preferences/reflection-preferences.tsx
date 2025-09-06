@@ -26,17 +26,17 @@ export default function ReflectionPreferences({
 
 
     return (
-        <Card className="overflow-hidden border-slate-200 shadow-sm">
-            <CardHeader className="border-b border-slate-100">
-                <CardTitle className="text-xl text-slate-800">Reflection Preferences</CardTitle>
+        <Card className="overflow-hidden border-border shadow-sm">
+            <CardHeader className="border-b border-border">
+                <CardTitle className="text-xl text-foreground">Reflection Preferences</CardTitle>
                 <CardDescription>Customize your daily reflection prompts</CardDescription>
             </CardHeader>
 
             <CardContent className="p-6">
                 <Flex direction="column" gap="6">
                     <Flex direction="column" gap="4">
-                        <Label className="text-lg font-semibold text-slate-700">Topic Focus</Label>
-                        <p className="mb-2 text-sm text-slate-600">Choose what areas you'd like to focus on in your reflections</p>
+                        <Label className="text-lg font-semibold text-foreground">Topic Focus</Label>
+                        <p className="mb-2 text-sm text-muted-foreground">Choose what areas you'd like to focus on in your reflections</p>
 
                         <div className="hidden grid-cols-2 gap-4 md:grid">
                             {Object.entries(nicheOptions).map(([key, value]) => (
@@ -45,19 +45,19 @@ export default function ReflectionPreferences({
                                     onClick={() => onNicheChange(value)}
                                     className={`cursor-pointer rounded-lg border-2 p-4 transition-all hover:shadow-md ${
                                         niche === value
-                                            ? 'border-blue-500 bg-blue-50 shadow-sm'
-                                            : 'border-slate-200 bg-white hover:border-slate-300'
+                                            ? 'border-accent-1 bg-accent-1/10 shadow-sm'
+                                            : 'border-border bg-card hover:border-accent-1/50'
                                     }`}
                                 >
                                     <div className="flex items-center justify-between">
-                                        <span className="font-medium text-slate-700">{value}</span>
+                                        <span className="font-medium text-foreground">{value}</span>
                                         <div
                                             className={`h-4 w-4 rounded-full border-2 ${
-                                                niche === value ? 'border-blue-500 bg-blue-500' : 'border-slate-300'
+                                                niche === value ? 'border-accent-1 bg-accent-1' : 'border-muted-foreground/30'
                                             }`}
                                         >
                                             {niche === value && (
-                                                <div className="h-full w-full scale-50 rounded-full bg-white"></div>
+                                                <div className="h-full w-full scale-50 rounded-full bg-background"></div>
                                             )}
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@ export default function ReflectionPreferences({
 
                         <div className="md:hidden">
                             <Select name="niche" value={niche} onValueChange={onNicheChange}>
-                                <SelectTrigger className="border-slate-200">
+                                <SelectTrigger className="border-border">
                                     <SelectValue placeholder="Select a topic focus" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -83,8 +83,8 @@ export default function ReflectionPreferences({
 
                     {/* Reflection Style Section */}
                     <Flex direction="column" gap="4">
-                        <Label className="text-lg font-semibold text-slate-700">Reflection Style</Label>
-                        <p className="mb-2 text-sm text-slate-600">Select the tone and approach for your daily prompts</p>
+                        <Label className="text-lg font-semibold text-foreground">Reflection Style</Label>
+                        <p className="mb-2 text-sm text-muted-foreground">Select the tone and approach for your daily prompts</p>
 
                         {/* Desktop: Clickable Cards */}
                         <div className="hidden grid-cols-2 gap-4 md:grid">
@@ -94,19 +94,19 @@ export default function ReflectionPreferences({
                                     onClick={() => onToneChange(value)}
                                     className={`cursor-pointer rounded-lg border-2 p-4 transition-all hover:shadow-md ${
                                         tone === value
-                                            ? 'border-green-500 bg-green-50 shadow-sm'
-                                            : 'border-slate-200 bg-white hover:border-slate-300'
+                                            ? 'border-accent-3 bg-accent-3/10 shadow-sm'
+                                            : 'border-border bg-card hover:border-accent-3/50'
                                     }`}
                                 >
                                     <div className="flex items-center justify-between">
-                                        <span className="font-medium text-slate-700">{value}</span>
+                                        <span className="font-medium text-foreground">{value}</span>
                                         <div
                                             className={`h-4 w-4 rounded-full border-2 ${
-                                                tone === value ? 'border-green-500 bg-green-500' : 'border-slate-300'
+                                                tone === value ? 'border-accent-3 bg-accent-3' : 'border-muted-foreground/30'
                                             }`}
                                         >
                                             {tone === value && (
-                                                <div className="h-full w-full scale-50 rounded-full bg-white"></div>
+                                                <div className="h-full w-full scale-50 rounded-full bg-background"></div>
                                             )}
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@ export default function ReflectionPreferences({
 
                         <div className="md:hidden">
                             <Select name="tone" value={tone} onValueChange={onToneChange}>
-                                <SelectTrigger className="border-slate-200">
+                                <SelectTrigger className="border-border">
                                     <SelectValue placeholder="Select a reflection style" />
                                 </SelectTrigger>
                                 <SelectContent>

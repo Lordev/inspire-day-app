@@ -12,10 +12,10 @@ interface ReflectionResponseProps {
 export default function ReflectionResponse({ prompt }: ReflectionResponseProps) {
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <Heading asChild size="md" className="mb-3 text-lg text-slate-800">
+            <Heading asChild size="md" className="mb-3 text-lg text-foreground">
                 <h4>Your Reflection:</h4>
             </Heading>
-            <div className="rounded-xl border border-slate-100 bg-slate-50 p-5">
+            <div className="rounded-xl border border-border bg-muted p-5">
                 <p className="whitespace-pre-wrap">{prompt.response}</p>
             </div>
             <div className="mt-4 flex justify-end">

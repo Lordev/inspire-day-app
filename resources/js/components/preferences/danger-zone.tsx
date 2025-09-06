@@ -42,7 +42,7 @@ export default function DangerZone({ onDeleteAccount, processing }: DangerZonePr
 
             <CardContent className="p-6">
                 <Flex direction="column" gap="4">
-                    <p className="text-sm text-slate-600">
+                    <p className="text-sm text-muted-foreground">
                         Before deleting your account, please download any data or information that you wish to retain.
                         This action cannot be undone.
                     </p>

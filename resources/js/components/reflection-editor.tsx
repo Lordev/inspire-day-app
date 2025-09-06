@@ -38,7 +38,7 @@ export default function ReflectionEditor() {
             }),
             CodeBlock.configure({
                 HTMLAttributes: {
-                    class: 'language-js bg-zinc-800 text-white border border-slate-200 rounded pl-4',
+                    class: 'language-js bg-zinc-800 text-white border border-border rounded pl-4',
                 },
             }),
             BulletList.configure({
@@ -53,7 +53,7 @@ export default function ReflectionEditor() {
             }),
             Blockquote.configure({
                 HTMLAttributes: {
-                    class: 'border-l-4 border-slate-200 pl-4 italic text-slate-700 bg-slate-50',
+                    class: 'border-l-4 border-border pl-4 italic text-muted-foreground bg-muted',
                 },
             }),
             Placeholder.configure({ placeholder: 'Write your reflection here...' }),
@@ -121,10 +121,10 @@ export default function ReflectionEditor() {
     if (!editor) return null;
 
     return (
-        <form className="h-full space-y-4" onSubmit={handleSave}>
-            <Flex direction="column" gap="2" className="">
+        <form className="space-y-4 h-full" onSubmit={handleSave}>
+            <Flex direction="column" gap="2" className="h-full">
                 <Label htmlFor="response">Your Reflection:</Label>
-                <div className="rounded-md border bg-white">
+                <div className="rounded-md border h-full">
                     <ReflectionToolbar
                         editor={editor}
                         editorState={editorState}
@@ -141,20 +141,19 @@ export default function ReflectionEditor() {
                         </Button>
                     </div>
                     <div className="p-3s">
-                        <div className="rounded-md bg-white p-3  overflow-hidden">
+                        <div className="rounded-md p-3  overflow-hidden h-full">
                             <DragHandle editor={editor}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
                                 </svg>
                             </DragHandle>
-                            <EditorContent editor={editor} className="prose 
-                            h-[400px] max-w-full focus:outline-none overflow-y-scroll" />
+                            <EditorContent editor={editor} className="prose h-full max-w-full focus:outline-none overflow-y-scroll" />
                         </div>
                     </div>
 
                     {editor && (
                         <BubbleMenu editor={editor} className="z-50">
-                            <div className="flex gap-1 rounded bg-white px-2 py-1 shadow">
+                            <div className="flex gap-1 rounded px-2 py-1 shadow">
                                 <button className="p-1" aria-label="Bold" onClick={() => editor.chain().focus().toggleBold().run()}>
                                     B
                                 </button>
@@ -170,7 +169,7 @@ export default function ReflectionEditor() {
 
                     {editor && (
                         <FloatingMenu editor={editor} className="z-40">
-                            <div className="flex gap-1 rounded bg-white px-2 py-1 shadow">
+                            <div className="flex gap-1 rounded px-2 py-1 shadow">
                                 <button className="p-1" aria-label="Bold" onClick={() => editor.chain().focus().toggleBold().run()}>
                                     B
                                 </button>

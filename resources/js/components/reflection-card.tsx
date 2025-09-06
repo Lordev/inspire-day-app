@@ -34,7 +34,7 @@ export default function ReflectionCard({ prompt }: ReflectionCardProps) {
 
     return (
         <motion.section className="lg:col-span-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <Card className="h-full">
+            <Card className="h-full bg-card">
                 <CardHeader >
                     <Flex direction="row" justify="between" align="start">
                         <Flex direction="column" gap="2">

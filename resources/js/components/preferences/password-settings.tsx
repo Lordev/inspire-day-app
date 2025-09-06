@@ -32,16 +32,16 @@ export default function PasswordSettings({
     errors,
 }: PasswordSettingsProps) {
     return (
-        <Card className="overflow-hidden border-slate-200 shadow-sm">
-            <CardHeader className="border-b border-slate-100">
-                <CardTitle className="text-xl text-slate-800">Update Password</CardTitle>
+        <Card className="overflow-hidden border-border shadow-sm">
+            <CardHeader className="border-b border-border">
+                <CardTitle className="text-xl text-foreground">Update Password</CardTitle>
                 <CardDescription>Ensure your account is using a long, random password to stay secure</CardDescription>
             </CardHeader>
 
             <CardContent className="p-6">
                 <Flex direction="column" gap="6">
                     <div className="space-y-2">
-                        <Label htmlFor="current_password" className="text-sm font-medium text-slate-700">
+                        <Label htmlFor="current_password" className="text-sm font-medium text-foreground">
                             Current Password
                         </Label>
                         <Input
@@ -49,14 +49,14 @@ export default function PasswordSettings({
                             type="password"
                             value={currentPassword}
                             onChange={(e) => onCurrentPasswordChange(e.target.value)}
-                            className="border-slate-200"
+                            className="border-border"
                             autoComplete="current-password"
                         />
                         {errors.current_password && <InputError message={errors.current_password} />}
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="password" className="text-sm font-medium text-slate-700">
+                        <Label htmlFor="password" className="text-sm font-medium text-foreground">
                             New Password
                         </Label>
                         <Input
@@ -64,14 +64,14 @@ export default function PasswordSettings({
                             type="password"
                             value={password}
                             onChange={(e) => onPasswordChange(e.target.value)}
-                            className="border-slate-200"
+                            className="border-border"
                             autoComplete="new-password"
                         />
                         {errors.password && <InputError message={errors.password} />}
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="password_confirmation" className="text-sm font-medium text-slate-700">
+                        <Label htmlFor="password_confirmation" className="text-sm font-medium text-foreground">
                             Confirm Password
                         </Label>
                         <Input
@@ -79,7 +79,7 @@ export default function PasswordSettings({
                             type="password"
                             value={passwordConfirmation}
                             onChange={(e) => onPasswordConfirmationChange(e.target.value)}
-                            className="border-slate-200"
+                            className="border-border"
                             autoComplete="new-password"
                         />
                         {errors.password_confirmation && <InputError message={errors.password_confirmation} />}

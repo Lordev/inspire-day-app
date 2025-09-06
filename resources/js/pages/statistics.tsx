@@ -25,35 +25,35 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
             value: statistics.totalReflections || 0,
             icon: BarChart3,
             description: 'Reflections created',
-            color: 'text-blue-600'
+            color: 'text-accent-1'
         },
         {
             title: 'Recent Activity',
             value: trends.recent_reflections || 0,
             icon: TrendingUp,
             description: 'Last 30 days',
-            color: 'text-green-600'
+            color: 'text-accent-2'
         },
         {
             title: 'Average Length',
             value: statistics.averageReflectionLength ? `${Math.round(statistics.averageReflectionLength)} chars` : '0 chars',
             icon: Clock,
             description: 'Per reflection',
-            color: 'text-purple-600'
+            color: 'text-accent-3'
         },
         {
             title: 'Most Active Day',
             value: statistics.mostActiveDay || 'No data',
             icon: Calendar,
             description: 'Your most productive day',
-            color: 'text-orange-600'
+            color: 'text-accent-4'
         },
         {
             title: 'Analyzed Reflections',
             value: insights.length || 0,
             icon: Target,
             description: 'AI analyzed',
-            color: 'text-teal-600'
+            color: 'text-accent-5'
         },
         {
             title: 'Activity Rate',
@@ -62,7 +62,7 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
                 : '0%',
             icon: Users,
             description: 'Recent vs total',
-            color: 'text-rose-600'
+            color: 'text-accent-1'
         }
     ]
 
@@ -86,13 +86,13 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
                                 >
                                     <Card className="hover:shadow-lg transition-shadow duration-300">
                                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                            <CardTitle className="text-sm font-medium text-slate-600">
+                                            <CardTitle className="text-sm font-medium text-muted-foreground">
                                                 {card.title}
                                             </CardTitle>
                                             <card.icon className={`h-5 w-5 ${card.color}`} />
                                         </CardHeader>
                                         <CardContent>
-                                            <div className="text-2xl font-bold text-slate-800 mb-1">
+                                            <div className="text-2xl font-bold text-foreground mb-1">
                                                 {card.value}
                                             </div>
                                             <CardDescription className="text-xs">
@@ -111,35 +111,35 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
                             transition={{ duration: 0.5, delay: 0.6 }}
                             className="mt-8"
                         >
-                            <Card className="border-slate-200">
+                            <Card className="border-border">
                                 <CardHeader>
-                                    <CardTitle className="text-xl text-slate-800">Summary</CardTitle>
+                                    <CardTitle className="text-xl text-foreground">Summary</CardTitle>
                                     <CardDescription>Your reflection journey at a glance</CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <Flex direction="column" gap="4">
-                                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">
-                                            <p className="text-slate-700">
-                                                You've created <span className="font-semibold text-blue-600">{statistics.totalReflections}</span> total reflections, 
-                                                with <span className="font-semibold text-green-600">{trends.recent_reflections}</span> in the last 30 days.
+                                        <div className="bg-gradient-to-r from-accent-1/10 to-accent-2/10 border border-accent-1/20 rounded-lg p-4">
+                                            <p className="text-foreground">
+                                                You've created <span className="font-semibold text-accent-1">{statistics.totalReflections}</span> total reflections, 
+                                                with <span className="font-semibold text-accent-3">{trends.recent_reflections}</span> in the last 30 days.
                                             </p>
                                         </div>
                                         
                                         {statistics.mostActiveDay && (
-                                            <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200 rounded-lg p-4">
-                                                <p className="text-slate-700">
-                                                    Your most active day is <span className="font-semibold text-orange-600">{statistics.mostActiveDay}</span>.
+                                            <div className="bg-gradient-to-r from-accent-4/10 to-accent-4/5 border border-accent-4/20 rounded-lg p-4">
+                                                <p className="text-foreground">
+                                                    Your most active day is <span className="font-semibold text-accent-4">{statistics.mostActiveDay}</span>.
                                                     {statistics.averageReflectionLength && (
-                                                        <span> Your reflections average <span className="font-semibold">{Math.round(statistics.averageReflectionLength)}</span> characters.</span>
+                                                        <span> Your reflections average <span className="font-semibold text-accent-1">{Math.round(statistics.averageReflectionLength)}</span> characters.</span>
                                                     )}
                                                 </p>
                                             </div>
                                         )}
                                         
                                         {insights.length > 0 && (
-                                            <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4">
-                                                <p className="text-slate-700">
-                                                    You've analyzed <span className="font-semibold text-purple-600">{insights.length}</span> reflection{insights.length !== 1 ? 's' : ''} with AI assistance to gain deeper insights.
+                                            <div className="bg-gradient-to-r from-accent-5/10 to-accent-2/10 border border-accent-5/20 rounded-lg p-4">
+                                                <p className="text-foreground">
+                                                    You've analyzed <span className="font-semibold text-accent-5">{insights.length}</span> reflection{insights.length !== 1 ? 's' : ''} with AI assistance to gain deeper insights.
                                                 </p>
                                             </div>
                                         )}

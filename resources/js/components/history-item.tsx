@@ -1,6 +1,6 @@
 import { currentPromptAtom } from '@/lib/atoms';
 import { Prompt } from '@/types';
-import { Flex } from '@radix-ui/themes';
+import { Flex, Grid } from '@radix-ui/themes';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { Sparkles } from 'lucide-react';
@@ -49,37 +49,49 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
             <Link href="#" onClick={(e) => handleEdit(e, item)} className="block">
             <Flex
                 direction="column"
-                className={`rounded-lg p-3 transition-all ${currentPrompt?.id === item.id ? 'border border-slate-200 bg-slate-50' : 'border border-zinc-200 bg-zinc-200'}`}
+                className={`rounded-lg p-3 transition-all ${currentPrompt?.id === item.id ? 'border border-border bg-card shadow-sm' : 'border border-border bg-muted'}`}
             >
                     <Flex align="start" justify="between" className="mb-1" gap="3">
                         <CalendarDate date={new Date(item.date)} />
-                        <Flex direction="column" >
-                            <Flex align="center" justify="end" className="mb-1">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    aria-label="Analyze reflection"
-                                    disabled={item.status !== 'answered'}
-                                    className={item.status !== 'answered' ? 'opacity-50' : ''}
-                                    onClick={item.status === 'answered' ? handleViewReflection : undefined}
-                                    title="Analyze reflection"
-                                >
-                                    <Sparkles size={18} />
-                                </Button>
+                            <Flex direction="column" gap="1">
+                                <Flex align="center" justify="end" className="mb-1">
+                                    {currentPrompt?.id === item.id ? (
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            aria-label="Analyze reflection"
+                                            disabled={item.status !== 'answered'}
+                                            className={item.status !== 'answered' ? 'opacity-50' : ''}
+                                            onClick={item.status === 'answered' ? handleViewReflection : undefined}
+                                            title="Analyze reflection"
+                                        >
+                                            <Sparkles size={18}/>
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            title="View reflection"
+                                            className="invisible"
+                                            disabled
+                                        >
+                                            <Sparkles size={18}/>
+                                        </Button>
+                                    )}
 
-                                {item.status === 'answered' ? (
-                                    <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-green-500" title="Completed"></span>
-                                ) : (
-                                    <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-amber-500" title="Pending"></span>
+                                    {item.status === 'answered' ? (
+                                        <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-accent-3" title="Completed"></span>
+                                    ) : (
+                                        <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-accent-4" title="Pending"></span>
+                                    )}
+                                </Flex>
+                                <p className="line-clamp-2 text-sm text-muted-foreground">"{item.prompt.substring(0, 30)}{item.prompt.length > 30 ? '...' : ''}"</p>
+                                {item.response && (
+                                    <p className="mt-1 line-clamp-1 text-xs text-muted-foreground/70">
+                                        {strippedResponse.length > 60 ? `${strippedResponse.substring(0, 60)}...` : strippedResponse}
+                                    </p>
                                 )}
                             </Flex>
-                            <p className="line-clamp-2 text-sm text-slate-600">"{item.prompt}"</p>
-                            {item.response && (
-                                <p className="mt-1 line-clamp-1 text-xs text-slate-500">
-                                    {strippedResponse.length > 60 ? `${strippedResponse.substring(0, 60)}...` : strippedResponse}
-                                </p>
-                            )}
-                        </Flex>
                     </Flex>
                 </Flex>
             </Link>

@@ -4,8 +4,7 @@ import { Flex, Section, Heading, Blockquote } from '@radix-ui/themes'
 import { SubHeading } from '@/components/ui/subheading'
 import type { Prompt } from '@/types'
 import { useForm } from '@inertiajs/react'
-import { useState } from 'react'
-import { set } from 'date-fns'
+import { useState, useEffect } from 'react'
 
 type AnalysisModalProps = {
     prompt: Prompt | null
@@ -43,7 +42,7 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
 
     return (
         <Dialog open={isModalOpen} onOpenChange={() => onClose()} className="p-8">
-            <DialogContent className="max-w-2xl">
+            <DialogContent className="max-w-2xl bg-popover text-popover-foreground">
                 <DialogTitle>
                 <Heading>{prompt?.prompt}</Heading>
                 </DialogTitle>
@@ -59,7 +58,7 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
                             
                             {!analysis && !processing && prompt?.response && (
                                 <div className="mb-4">
-                                    <p className="text-slate-600 mb-4">Get personalized insights about your reflection</p>
+                                    <p className="text-muted-foreground mb-4">Get personalized insights about your reflection</p>
                                     <Button 
                                         onClick={analyzeResponse}
                                         disabled={processing}
@@ -72,18 +71,18 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
 
                             {processing && (
                                 <div className="flex items-center justify-center py-8">
-                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                                    <span className="ml-3 text-slate-600">Analyzing your reflection...</span>
+                                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-2"></div>
+                                    <span className="ml-3 text-muted-foreground">Analyzing your reflection...</span>
                                 </div>
                             )}
 
                             {analysis && (
-                                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
+                                <div className="bg-gradient-to-br from-accent-2/10 to-accent-3/10 border border-accent-2/30 rounded-lg p-6">
                                     <div className="flex items-center mb-3">
-                                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-                                        <span className="text-sm font-medium text-blue-700">AI Insights</span>
+                                        <div className="w-2 h-2 bg-accent-2 rounded-full mr-2"></div>
+                                        <span className="text-sm font-medium text-accent-2">AI Insights</span>
                                     </div>
-                                    <Blockquote className="text-slate-700 leading-relaxed">
+                                    <Blockquote className="text-foreground leading-relaxed">
                                         {prompt?.analysis || analysis}
                                     </Blockquote>
                                 </div>
@@ -91,7 +90,7 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
 
                             {!prompt?.response && (
                                 <div className="text-center py-8">
-                                    <p className="text-slate-500">Complete your reflection to get AI analysis</p>
+                                    <p className="text-muted-foreground">Complete your reflection to get AI analysis</p>
                                 </div>
                             )}
                         </Section>
