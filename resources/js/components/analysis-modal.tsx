@@ -19,6 +19,12 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
         response: prompt ? prompt.response : '',
     });
 
+    useEffect(() => {
+        if (prompt?.analysis === null) {
+            setAnalysis(null); 
+        }
+    }, [prompt]);
+
     const analyzeResponse = () => {
         if (!prompt?.id) return;
         
