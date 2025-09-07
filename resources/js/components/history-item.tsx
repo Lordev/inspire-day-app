@@ -80,12 +80,12 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
                                     )}
 
                                     {item.status === 'answered' ? (
-                                        <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-accent-3" title="Completed"></span>
+                                        <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-green-500" title="Completed"></span>
                                     ) : (
-                                        <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-accent-4" title="Pending"></span>
+                                        <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-orange-500" title="Pending"></span>
                                     )}
                                 </Flex>
-                                <p className="line-clamp-2 text-sm text-muted-foreground">"{item.prompt.substring(0, 30)}{item.prompt.length > 30 ? '...' : ''}"</p>
+                                <p className="line-clamp-2 text-sm text-muted-foreground">"{item.prompt.substring(0, 60)}{item.prompt.length > 60 ? '...' : ''}"</p>
                                 {item.response && (
                                     <p className="mt-1 line-clamp-1 text-xs text-muted-foreground/70">
                                         {strippedResponse.length > 60 ? `${strippedResponse.substring(0, 60)}...` : strippedResponse}

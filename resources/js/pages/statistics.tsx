@@ -25,35 +25,35 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
             value: statistics.totalReflections || 0,
             icon: BarChart3,
             description: 'Reflections created',
-            color: 'text-accent-1'
+            color: 'text-primary'
         },
         {
             title: 'Recent Activity',
             value: trends.recent_reflections || 0,
             icon: TrendingUp,
             description: 'Last 30 days',
-            color: 'text-accent-2'
+            color: 'text-primary'
         },
         {
             title: 'Average Length',
             value: statistics.averageReflectionLength ? `${Math.round(statistics.averageReflectionLength)} chars` : '0 chars',
             icon: Clock,
             description: 'Per reflection',
-            color: 'text-accent-3'
+            color: 'text-primary'
         },
         {
             title: 'Most Active Day',
             value: statistics.mostActiveDay || 'No data',
             icon: Calendar,
             description: 'Your most productive day',
-            color: 'text-accent-4'
+            color: 'text-primary'
         },
         {
             title: 'Analyzed Reflections',
             value: insights.length || 0,
             icon: Target,
             description: 'AI analyzed',
-            color: 'text-accent-5'
+            color: 'text-primary'
         },
         {
             title: 'Activity Rate',
@@ -62,14 +62,14 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
                 : '0%',
             icon: Users,
             description: 'Recent vs total',
-            color: 'text-accent-1'
+            color: 'text-primary'
         }
     ]
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Statistics" />
-            <div className="flex flex-col px-4 md:px-6 h-full max-w-5xl">
+            <div className="px-4 md:px-6 h-full max-w-5xl">
                 <DashboardHeader title='Statistics'/>
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }} 
@@ -118,28 +118,28 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
                                 </CardHeader>
                                 <CardContent>
                                     <Flex direction="column" gap="4">
-                                        <div className="bg-gradient-to-r from-accent-1/10 to-accent-2/10 border border-accent-1/20 rounded-lg p-4">
+                                        <div className="bg-muted/50 border border-border rounded-lg p-4">
                                             <p className="text-foreground">
-                                                You've created <span className="font-semibold text-accent-1">{statistics.totalReflections}</span> total reflections, 
-                                                with <span className="font-semibold text-accent-3">{trends.recent_reflections}</span> in the last 30 days.
+                                                You've created <span className="font-semibold text-primary">{statistics.totalReflections}</span> total reflections, 
+                                                with <span className="font-semibold text-primary">{trends.recent_reflections}</span> in the last 30 days.
                                             </p>
                                         </div>
                                         
                                         {statistics.mostActiveDay && (
-                                            <div className="bg-gradient-to-r from-accent-4/10 to-accent-4/5 border border-accent-4/20 rounded-lg p-4">
+                                            <div className="bg-muted/50 border border-border rounded-lg p-4">
                                                 <p className="text-foreground">
-                                                    Your most active day is <span className="font-semibold text-accent-4">{statistics.mostActiveDay}</span>.
+                                                    Your most active day is <span className="font-semibold text-primary">{statistics.mostActiveDay}</span>.
                                                     {statistics.averageReflectionLength && (
-                                                        <span> Your reflections average <span className="font-semibold text-accent-1">{Math.round(statistics.averageReflectionLength)}</span> characters.</span>
+                                                        <span> Your reflections average <span className="font-semibold text-primary">{Math.round(statistics.averageReflectionLength)}</span> characters.</span>
                                                     )}
                                                 </p>
                                             </div>
                                         )}
                                         
                                         {insights.length > 0 && (
-                                            <div className="bg-gradient-to-r from-accent-5/10 to-accent-2/10 border border-accent-5/20 rounded-lg p-4">
+                                            <div className="bg-muted/50 border border-border rounded-lg p-4">
                                                 <p className="text-foreground">
-                                                    You've analyzed <span className="font-semibold text-accent-5">{insights.length}</span> reflection{insights.length !== 1 ? 's' : ''} with AI assistance to gain deeper insights.
+                                                    You've analyzed <span className="font-semibold text-primary">{insights.length}</span> reflection{insights.length !== 1 ? 's' : ''} with AI assistance to gain deeper insights.
                                                 </p>
                                             </div>
                                         )}

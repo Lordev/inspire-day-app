@@ -7,7 +7,7 @@ export interface BlockquoteProps extends React.HTMLAttributes<HTMLQuoteElement> 
 function Blockquote({ children, className = '', ...props }: BlockquoteProps) {
   return (
     <blockquote
-      className={`relative p-6 rounded-lg bg-muted text-zinc-800 text-lg font-light  ${className}`}
+      className={`relative p-6  bg-gradient-to-r from-primary/10 to-secondary/50 text-muted-foreground font-medium ${className}`}
       {...props}
     >
       <p className="relative z-10">{children}</p>

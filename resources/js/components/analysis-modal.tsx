@@ -44,7 +44,7 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
         <Dialog open={isModalOpen} onOpenChange={() => onClose()} className="p-8">
             <DialogContent className="max-w-2xl bg-popover text-popover-foreground">
                 <DialogTitle>
-                <Heading>{prompt?.prompt}</Heading>
+                {/* <Heading>{prompt?.prompt}</Heading> */}
                 </DialogTitle>
                 
                 <DialogDescription className="sr-only">
@@ -59,10 +59,10 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
                             {!analysis && !processing && prompt?.response && (
                                 <div className="mb-4">
                                     <p className="text-muted-foreground mb-4">Get personalized insights about your reflection</p>
-                                    <Button 
+                                    <Button
                                         onClick={analyzeResponse}
                                         disabled={processing}
-                                        className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                                        variant="default"
                                     >
                                         {processing ? 'Analyzing...' : 'Generate AI Analysis'}
                                     </Button>
@@ -77,10 +77,10 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
                             )}
 
                             {analysis && (
-                                <div className="bg-gradient-to-br from-accent-2/10 to-accent-3/10 border border-accent-2/30 rounded-lg p-6">
+                                <div className="bg-muted/50 border border-border rounded-lg p-4">
                                     <div className="flex items-center mb-3">
-                                        <div className="w-2 h-2 bg-accent-2 rounded-full mr-2"></div>
-                                        <span className="text-sm font-medium text-accent-2">AI Insights</span>
+                                        <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
+                                        <span className="text-sm font-medium text-primary">AI Insights</span>
                                     </div>
                                     <Blockquote className="text-foreground leading-relaxed">
                                         {prompt?.analysis || analysis}
