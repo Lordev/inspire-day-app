@@ -59,8 +59,6 @@
     --color-sidebar-ring: var(--sidebar-ring);
 }
 
-
-
 :where(.radix-themes) {
     --color-background: oklch(99.405% 0.00011 271.152);
     --color-foreground: oklch(0.2 0.009 272.314);
@@ -71,24 +69,19 @@
     --card-foreground: oklch(0.15 0.007 272.314);
     --popover: oklch(0.975 0.001 247.858);
     --popover-foreground: oklch(0.15 0.007 272.314);
-    --primary: oklch(0.35 0.015 259.816);
+    --primary: oklch(0.55 0.08 200);
     --primary-foreground: oklch(0.98 0.002 247.858);
-    --secondary: oklch(0.94 0.006 264.543);
+    --secondary: oklch(90.463% 0.02365 44.148);
     --secondary-foreground: oklch(0.25 0.012 259.816);
     --muted: oklch(0.94 0.006 264.543);
     --muted-foreground: oklch(45.118% 0.01314 256.81);
-    --accent: oklch(92.105% 0.00761 260.881);
-    --accent-foreground: oklch(0.25 0.012 259.816);
+    --accent: var(--primary);
+    --accent-foreground: var(--primary-foreground);
     --destructive: oklch(0.577 0.245 27.325);
     --destructive-foreground: oklch(0.98 0.002 247.858);
     --border: oklch(0.89 0.008 264.543);
     --input: oklch(0.89 0.008 264.543);
     --ring: oklch(72.19% 0.12494 185.484);
-    --accent-1: oklch(72.19% 0.12494 185.484);
-    --accent-2: oklch(68% 0.15 220); /* Complementary blue */
-    --accent-3: oklch(70% 0.12 160); /* Harmonious green */
-    --accent-4: oklch(75% 0.14 45); /* Warm orange */
-    --accent-5: oklch(65% 0.18 285); /* Vibrant purple */
     --radius: 0.5rem;
     --sidebar: oklch(90.23% 0.06838 189.238);
     --sidebar-foreground: oklch(0.2 0.009 272.314);
@@ -107,7 +100,7 @@
     --card-foreground: oklch(0.95 0.004 264.543);
     --popover: oklch(0.13 0.012 272.314);
     --popover-foreground: oklch(0.95 0.004 264.543);
-    --primary: oklch(0.85 0.006 264.543);
+    --primary: oklch(0.65 0.12 200);
     --primary-foreground: oklch(0.15 0.015 272.314);
     --secondary: oklch(0.2 0.015 272.314);
     --secondary-foreground: oklch(0.9 0.005 264.543);
@@ -124,7 +117,7 @@
     --accent-2: oklch(70% 0.18 220); /* Brighter blue for dark mode */
     --accent-3: oklch(72% 0.14 160); /* Brighter green for dark mode */
     --accent-4: oklch(78% 0.16 45); /* Brighter orange for dark mode */
-    --accent-5: oklch(68% 0.20 285); /* Brighter purple for dark mode */
+    --accent-5: oklch(68% 0.2 285); /* Brighter purple for dark mode */
     --sidebar: oklch(0.08 0.012 272.314);
     --sidebar-foreground: oklch(0.9 0.005 264.543);
     --sidebar-primary: oklch(0.85 0.006 264.543);
@@ -136,7 +129,6 @@
 }
 
 @layer base {
-
     * {
         @apply border-border;
     }
@@ -148,48 +140,48 @@
     .ProseMirror {
         padding-inline: 4rem;
 
-    > * + * {
-        margin-top: 0.75em;
-    }
-
-    [data-id] {
-        border: 3px solid #0d0d0d;
-        border-radius: 0.5rem;
-        margin: 1rem 0;
-        position: relative;
-        margin-top: 1.5rem;
-        padding: 2rem 1rem 1rem;
-
-        &::before {
-        content: attr(data-id);
-        background-color: #0d0d0d;
-        font-size: 0.6rem;
-        letter-spacing: 1px;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: #fff;
-        position: absolute;
-        top: 0;
-        padding: 0.25rem 0.75rem;
-        border-radius: 0 0 0.5rem 0.5rem;
+        > * + * {
+            margin-top: 0.75em;
         }
-    }
-    }
 
-    .drag-handle {
-        align-items: center;
-        background: #f0f0f0;
-        border-radius: 0.25rem;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        cursor: grab;
-        display: flex;
-        height: 1.5rem;
-        justify-content: center;
-        width: 1.5rem;
+        [data-id] {
+            border: 3px solid #0d0d0d;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            position: relative;
+            margin-top: 1.5rem;
+            padding: 2rem 1rem 1rem;
 
-        svg {
-            width: 1.25rem;
-            height: 1.25rem;
+            &::before {
+                content: attr(data-id);
+                background-color: #0d0d0d;
+                font-size: 0.6rem;
+                letter-spacing: 1px;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #fff;
+                position: absolute;
+                top: 0;
+                padding: 0.25rem 0.75rem;
+                border-radius: 0 0 0.5rem 0.5rem;
+            }
+        }
+
+        .drag-handle {
+            align-items: center;
+            background: #f0f0f0;
+            border-radius: 0.25rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            cursor: grab;
+            display: flex;
+            height: 1.5rem;
+            justify-content: center;
+            width: 1.5rem;
+
+            svg {
+                width: 1.25rem;
+                height: 1.25rem;
+            }
         }
     }
 }
