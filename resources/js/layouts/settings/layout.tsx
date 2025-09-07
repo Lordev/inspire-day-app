@@ -1,67 +1,60 @@
-import Heading from '@/components/heading';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
-import { type NavItem } from '@/types';
+import DashboardHeader from '@/components/dashboard-header';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Settings, User as UserIcon, Lock, Palette } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'Profile',
-        href: '/settings/profile',
-        icon: null,
-    },
-    {
-        title: 'Password',
-        href: '/settings/password',
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: '/settings/appearance',
-        icon: null,
-    },
-];
+interface SettingsLayoutProps extends PropsWithChildren {
+    activeTab?: string;
+}
 
-export default function SettingsLayout({ children }: PropsWithChildren) {
-    // When server-side rendering, we only render the layout on the client...
-    if (typeof window === 'undefined') {
-        return null;
-    }
-
-    const currentPath = window.location.pathname;
-
+export default function SettingsLayout({ children, activeTab = 'profile' }: SettingsLayoutProps) {
     return (
-        <div className="px-4 py-6">
-            <Heading title="Settings" description="Manage your profile and account settings" />
+        <div className="flex flex-col px-4 md:px-6 h-full">
+            <DashboardHeader title='Settings & Preferences'/>
+            <div className="flex h-full max-w-2xl flex-1 flex-col overflow-hidden">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }} 
+                    animate={{ opacity: 1, y: 0 }} 
+                    transition={{ duration: 0.5 }}
+                    className="flex-1 flex flex-col"
+                >
+                    <Tabs value={activeTab} className="flex-1 flex flex-col">
+                        <TabsList className="grid w-full grid-cols-4 gap-2 mb-6">
+                            <Link href="/settings/reflection" className="flex-1">
+                                <TabsTrigger value="reflection" className="flex items-center gap-2 justify-center w-full">
+                                    <Settings className="h-4 w-4" />
+                                    <span className="hidden sm:inline">Reflection</span>
+                                </TabsTrigger>
+                            </Link>
+                            <Link href="/settings/profile" className="flex-1">
+                                <TabsTrigger value="profile" className="flex items-center gap-2 justify-center w-full">
+                                    <UserIcon className="h-4 w-4" />
+                                    <span className="hidden sm:inline">Profile</span>
+                                </TabsTrigger>
+                            </Link>
+                            <Link href="/settings/password" className="flex-1">
+                                <TabsTrigger value="password" className="flex items-center gap-2 justify-center w-full">
+                                    <Lock className="h-4 w-4" />
+                                    <span className="hidden sm:inline">Password</span>
+                                </TabsTrigger>
+                            </Link>
+                            <Link href="/settings/appearance" className="flex-1">
+                                <TabsTrigger value="appearance" className="flex items-center gap-2 justify-center w-full">
+                                    <Palette className="h-4 w-4" />
+                                    <span className="hidden sm:inline">Appearance</span>
+                                </TabsTrigger>
+                            </Link>
+                        </TabsList>
 
-            <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
-                <aside className="w-full max-w-xl lg:w-48">
-                    <nav className="flex flex-col space-y-1 space-x-0">
-                        {sidebarNavItems.map((item, index) => (
-                            <Button
-                                key={`${item.href}-${index}`}
-                                size="sm"
-                                variant="ghost"
-                                asChild
-                                className={cn('w-full justify-start', {
-                                    'bg-muted': currentPath === item.href,
-                                })}
-                            >
-                                <Link href={item.href} prefetch>
-                                    {item.title}
-                                </Link>
-                            </Button>
-                        ))}
-                    </nav>
-                </aside>
-
-                <Separator className="my-6 md:hidden" />
-
-                <div className="flex-1 md:max-w-2xl">
-                    <section className="max-w-xl space-y-12">{children}</section>
-                </div>
+                        <div className="flex-1 overflow-auto">
+                            <TabsContent value={activeTab} className="mt-0 h-full">
+                                {children}
+                            </TabsContent>
+                        </div>
+                    </Tabs>
+                </motion.div>
             </div>
         </div>
     );

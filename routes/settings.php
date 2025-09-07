@@ -21,4 +21,16 @@ Route::middleware('auth')->group(function () {
     Route::get('settings/appearance', function () {
         return Inertia::render('settings/appearance');
     })->name('appearance');
+
+    Route::get('settings/reflection', function () {
+        return Inertia::render('settings/reflection', [
+            'user' => request()->user(),
+            'options' => [
+                'niches' => \App\Enums\Niche::options(),
+                'tones' => \App\Enums\Tone::options(),
+            ],
+        ]);
+    })->name('settings.reflection');
+
+    Route::post('settings/reflection', [\App\Http\Controllers\AppController::class, 'storePreferences'])->name('settings.reflection.update');
 });

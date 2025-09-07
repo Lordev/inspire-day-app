@@ -15,7 +15,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Settings',
-        href: '/preferences',
+        href: '/settings',
         icon: Settings,
     },
     {
