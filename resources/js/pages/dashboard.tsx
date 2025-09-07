@@ -21,9 +21,9 @@ export default function Dashboard({ prompt, history }: Props) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Daily Reflection" />
-            <div className="mx-auto flex flex-col px-4 md:px-6 md:pb-6 overflow-hidden h-full bg-background">
+            <div className="px-4 md:px-6 md:pb-6 lg:overflow-hidden h-full bg-background">
                 <DashboardHeader title='Daily Reflection' />
-                <div className="grid min-h-0 flex-1 grid-cols-3 gap-6 lg:grid-cols-4 h-full">
+                <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     <HistorySidebar history={history} />
                     <ReflectionCard prompt={prompt} />
                 </div>

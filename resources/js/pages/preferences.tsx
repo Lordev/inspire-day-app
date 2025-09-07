@@ -1,8 +1,6 @@
-import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { options, User } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
-import { Flex } from '@radix-ui/themes';
 import { motion } from 'framer-motion';
 import { FormEvent, useState } from 'react';
 import DashboardHeader from '@/components/dashboard-header';
@@ -82,7 +80,7 @@ export default function PreferencesPage({ user, options, mustVerifyEmail, status
             <Head title="Preferences" />
             <div className="flex flex-col px-4 md:px-6 h-full">
                 <DashboardHeader title='Settings & Preferences'/>
-                <div className="flex h-full max-w-5xl flex-1 flex-col overflow-hidden">
+                <div className="flex h-full max-w-2xl flex-1 flex-col overflow-hidden">
                     <motion.div 
                         initial={{ opacity: 0, y: 20 }} 
                         animate={{ opacity: 1, y: 0 }} 
