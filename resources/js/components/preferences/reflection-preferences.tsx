@@ -3,6 +3,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Flex } from '@radix-ui/themes';
 import { Button } from '@/components/ui/button';
+import { RadioCardsRoot, RadioCardsItem } from '@/components/ui/radio-cards';
 
 interface ReflectionPreferencesProps {
     niche: string;
@@ -35,34 +36,21 @@ export default function ReflectionPreferences({
             <CardContent className="p-6">
                 <Flex direction="column" gap="6">
                     <Flex direction="column" gap="4">
-                        <Label className="text-lg font-semibold text-foreground">Topic Focus</Label>
+                    <Label className="text-lg font-semibold text-foreground">Topic Focus</Label>
                         <p className="mb-2 text-sm text-muted-foreground">Choose what areas you'd like to focus on in your reflections</p>
 
-                        <div className="hidden grid-cols-2 gap-4 md:grid">
-                            {Object.entries(nicheOptions).map(([key, value]) => (
-                                <div
-                                    key={key}
-                                    onClick={() => onNicheChange(value)}
-                                    className={`cursor-pointer rounded-lg border-2 p-4 transition-all hover:shadow-md ${
-                                        niche === value
-                                            ? 'border-accent-1 bg-accent-1/10 shadow-sm'
-                                            : 'border-border bg-card hover:border-accent-1/50'
-                                    }`}
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <span className="font-medium text-foreground">{value}</span>
-                                        <div
-                                            className={`h-4 w-4 rounded-full border-2 ${
-                                                niche === value ? 'border-accent-1 bg-accent-1' : 'border-muted-foreground/30'
-                                            }`}
+                        <div className="hidden md:block">
+                                <RadioCardsRoot value={niche} onValueChange={onNicheChange} columns={{ initial: "1", sm: "2" }}>
+                                    {Object.entries(nicheOptions).map(([key, value]) => (
+                                        <RadioCardsItem key={key} value={value}
+                                        variant="secondary"
                                         >
-                                            {niche === value && (
-                                                <div className="h-full w-full scale-50 rounded-full bg-background"></div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                                            <Flex direction="column" width="100%">
+                                                <span className="text-foreground font-bold">{value}</span>
+                                            </Flex>
+                                        </RadioCardsItem>
+                                    ))}
+                                </RadioCardsRoot>
                         </div>
 
                         <div className="md:hidden">
@@ -86,32 +74,18 @@ export default function ReflectionPreferences({
                         <Label className="text-lg font-semibold text-foreground">Reflection Style</Label>
                         <p className="mb-2 text-sm text-muted-foreground">Select the tone and approach for your daily prompts</p>
 
-                        {/* Desktop: Clickable Cards */}
-                        <div className="hidden grid-cols-2 gap-4 md:grid">
-                            {Object.entries(toneOptions).map(([key, value]) => (
-                                <div
-                                    key={key}
-                                    onClick={() => onToneChange(value)}
-                                    className={`cursor-pointer rounded-lg border-2 p-4 transition-all hover:shadow-md ${
-                                        tone === value
-                                            ? 'border-accent-3 bg-accent-3/10 shadow-sm'
-                                            : 'border-border bg-card hover:border-accent-3/50'
-                                    }`}
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <span className="font-medium text-foreground">{value}</span>
-                                        <div
-                                            className={`h-4 w-4 rounded-full border-2 ${
-                                                tone === value ? 'border-accent-3 bg-accent-3' : 'border-muted-foreground/30'
-                                            }`}
+                        {/* Desktop: Radio Cards */}
+                        <div className="hidden md:block">
+                                <RadioCardsRoot value={tone} onValueChange={onToneChange} columns={{ initial: "1", sm: "2" }}>
+                                    {Object.entries(toneOptions).map(([key, value]) => (
+                                        <RadioCardsItem key={key} value={value} variant="secondary"
                                         >
-                                            {tone === value && (
-                                                <div className="h-full w-full scale-50 rounded-full bg-background"></div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                                            <Flex direction="column" width="100%">
+                                                <span className="font-bold text-foreground">{value}</span>
+                                            </Flex>
+                                        </RadioCardsItem>
+                                    ))}
+                                </RadioCardsRoot>
                         </div>
 
                         <div className="md:hidden">
