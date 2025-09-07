@@ -1,7 +1,7 @@
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useForm } from '@inertiajs/react';
-import { Flex } from '@radix-ui/themes';
+import { Flex, ScrollArea } from '@radix-ui/themes';
 import Blockquote from '@tiptap/extension-blockquote';
 import CodeBlock from '@tiptap/extension-code-block';
 import DragHandle from '@tiptap/extension-drag-handle-react';
@@ -140,14 +140,14 @@ export default function ReflectionEditor() {
                             {processing ? 'Saving...' : 'Save Reflection'}
                         </Button>
                     </div>
-                    <div className="p-3s">
-                        <div className="rounded-md p-3  overflow-hidden h-full">
+                    <div className="p-3">
+                        <div className="rounded-md p-3 l">
                             <DragHandle editor={editor}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
                                 </svg>
                             </DragHandle>
-                            <EditorContent editor={editor} className="prose h-full max-w-full focus:outline-none overflow-y-scroll" />
+                            <EditorContent editor={editor} className="prose max-w-full focus:outline-none overflow-y-scroll xl:h-96 h-52" />
                         </div>
                     </div>
 

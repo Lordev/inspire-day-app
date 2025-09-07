@@ -22,7 +22,7 @@ export default function ReflectionCard({ prompt }: ReflectionCardProps) {
 
     if (!activePrompt) {
         return (
-            <motion.section className="lg:col-span-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <motion.section className="lg:col-span-2 xl:col-span-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <Card>
                     <CardContent className="p-6">
                         <CardDescription as="p">No prompt available at the moment. Please try again later.</CardDescription>
@@ -33,7 +33,7 @@ export default function ReflectionCard({ prompt }: ReflectionCardProps) {
     }
 
     return (
-        <motion.section className="lg:col-span-3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <motion.section className="xl:col-span-3 lg:col-span-2 max-h-[85vh]" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <Card className="h-full bg-card">
                 <CardHeader >
                     <Flex direction="row" justify="between" align="start">
@@ -41,13 +41,7 @@ export default function ReflectionCard({ prompt }: ReflectionCardProps) {
                             <CardTitle as="h2">Today's Reflection </CardTitle>
                             <CardDescription as="p">{formatDate(new Date())} </CardDescription>
                         </Flex>
-                        <Badge
-                            variant={isAnswered ? 'default' : 'outline'}
-                            aria-label={isAnswered ? 'Reflection completed' : 'Reflection unanswered'}
-                            className="flex-shrink-0"
-                        >
-                            {isAnswered ? 'Completed' : 'Unanswered'}
-                        </Badge>
+
                     </Flex>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-6 p-6 h-full">

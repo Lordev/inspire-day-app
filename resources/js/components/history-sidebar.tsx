@@ -12,28 +12,28 @@ interface HistorySidebarProps {
 export default function HistorySidebar({ history }: HistorySidebarProps) {
     return (
         <motion.div
-            className="lg:col-span-1"
+            className="lg:col-span-1 max-h-[85vh] overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
         >
-            <Card className="pb-1 h-full bg-card/80">
-                <CardHeader>
-                    <Flex align="center" gap="2">
-                        <CalendarDays size={18} />
-                        <Heading asChild size="md" className="text-lg">
+                <Card className="pb-1 h-full bg-card/80">
+                    <CardHeader>
+                        <Flex align="center" gap="2">
+                            <CalendarDays size={18} />
+                            <Heading asChild size="md" className="text-lg">
                             <span>Previous Reflections</span>
                         </Heading>
                     </Flex>
                     <CardDescription>Your reflection journey</CardDescription>
                 </CardHeader>
-                <CardContent className="overflow-y-auto p-4">
+                <CardContent className="p-4 overflow-x-auto lg:overflow-y-auto">
                     {history.length > 0 ? (
-                        <Flex direction="column" className="h-full overflow-y-auto" gap="3">
-                            {history.map((item, index) => (
-                                <HistoryItem key={item.id} item={item} index={index} />
-                            ))}
-                        </Flex>
+                            <Flex direction="lg:col row" className="lg:flex-col lg:h-full" gap="3">
+                                    {history.map((item, index) => (
+                                        <HistoryItem key={item.id} item={item} index={index} />
+                                    ))}
+                            </Flex>
                     ) : (
                         <Flex direction="column" align="center" className="py-8 text-center">
                             <p className="text-muted-foreground">No previous reflections yet</p>
