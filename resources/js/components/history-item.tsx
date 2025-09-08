@@ -49,7 +49,7 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
             <Link href="#" onClick={(e) => handleEdit(e, item)} className="block">
             <Flex
                 direction="column"
-                className={`rounded-lg p-3 transition-all ${currentPrompt?.id === item.id ? 'border border-border bg-card shadow-sm' : 'border border-border bg-muted'}`}
+                className={`rounded-lg p-3 transition-all ${currentPrompt?.id === item.id ? 'border border-border bg-secondary shadow-sm text-secondary-foreground' : 'border border-border bg-muted text-muted-foreground'}`}
             >
                     <Flex align="start" justify="between" className="mb-1" gap="3">
                         <CalendarDate date={new Date(item.date)} />
@@ -85,9 +85,9 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
                                         <span className="mr-1 ml-2 inline-flex h-2 w-2 rounded-full bg-orange-500" title="Pending"></span>
                                     )}
                                 </Flex>
-                                <p className="line-clamp-2 text-sm text-muted-foreground">"{item.prompt.substring(0, 60)}{item.prompt.length > 60 ? '...' : ''}"</p>
+                                <p className="line-clamp-2 text-sm">"{item.prompt.substring(0, 60)}{item.prompt.length > 60 ? '...' : ''}"</p>
                                 {item.response && (
-                                    <p className="mt-1 line-clamp-1 text-xs text-muted-foreground/70">
+                                    <p className="mt-1 line-clamp-1 text-xs">
                                         {strippedResponse.length > 60 ? `${strippedResponse.substring(0, 60)}...` : strippedResponse}
                                     </p>
                                 )}

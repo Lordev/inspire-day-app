@@ -60,8 +60,6 @@
 }
 
 :where(.radix-themes) {
-    --color-background: oklch(99.405% 0.00011 271.152);
-    --color-foreground: oklch(0.2 0.009 272.314);
 }
 
 :root {
@@ -102,7 +100,7 @@
     --popover-foreground: oklch(0.95 0.004 264.543);
     --primary: oklch(0.65 0.12 200);
     --primary-foreground: oklch(0.15 0.015 272.314);
-    --secondary: oklch(0.2 0.015 272.314);
+    --secondary: oklch(43.909% 0.01293 39.181);
     --secondary-foreground: oklch(0.9 0.005 264.543);
     --muted: oklch(0.2 0.015 272.314);
     --muted-foreground: oklch(0.65 0.008 264.543);
@@ -110,19 +108,14 @@
     --accent-foreground: oklch(0.9 0.005 264.543);
     --destructive: oklch(0.396 0.141 25.723);
     --destructive-foreground: oklch(0.95 0.004 264.543);
-    --border: oklch(0.2 0.015 272.314);
+    --border: oklch(28.683% 0.02459 271.456);
     --input: oklch(0.2 0.015 272.314);
     --ring: oklch(0.75 0.007 264.543);
-    --accent-1: oklch(75% 0.15 185); /* Brighter accent for dark mode */
-    --accent-2: oklch(70% 0.18 220); /* Brighter blue for dark mode */
-    --accent-3: oklch(72% 0.14 160); /* Brighter green for dark mode */
-    --accent-4: oklch(78% 0.16 45); /* Brighter orange for dark mode */
-    --accent-5: oklch(68% 0.2 285); /* Brighter purple for dark mode */
     --sidebar: oklch(0.08 0.012 272.314);
     --sidebar-foreground: oklch(0.9 0.005 264.543);
     --sidebar-primary: oklch(0.85 0.006 264.543);
     --sidebar-primary-foreground: oklch(0.15 0.015 272.314);
-    --sidebar-accent: oklch(0.18 0.016 272.314);
+    --sidebar-accent: oklch(30.288% 0.02036 273.159);
     --sidebar-accent-foreground: oklch(0.9 0.005 264.543);
     --sidebar-border: oklch(0.2 0.015 272.314);
     --sidebar-ring: oklch(0.75 0.007 264.543);
