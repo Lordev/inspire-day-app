@@ -32,18 +32,18 @@ classDiagram
         +generatePrompt(niche, tone)
     }
     class PromptRepository {
-        +save(prompt)
-        +getByUserAndDate(user, date)
-        +getHistory(user)
+        +savePrompt(user, promptText)
+        +getTodaysPrompt(user)
+        +getHistory(user, limit)
+        +saveResponse(prompt, response)
     }
     class PromptService {
         +generatePromptForUser(user)
         +getTodaysPrompt(user)
         +savePrompt(user, prompt)
         +getPromptHistory(user, limit)
+        +analyzeResponse(prompt, response)
         -getFallbackPrompt(string)
-        -getFallbackPrompt()
-        +analyzeResponse()
         -promptRepository
     }
     class StatisticsService {
@@ -51,7 +51,7 @@ classDiagram
         +getReflectionTrends(user)
         +getAnalysisInsights(user)
     }
-    class PromptController {
+    class AppController {
         +showDashboard()
         +onBoarding()
         +showStatistics()
@@ -66,6 +66,6 @@ classDiagram
     PromptService ..> Prompt : manages
     PromptService ..> OpenAIClient : delegates
     PromptService ..> PromptRepository : delegates
-    PromptController ..> PromptService : calls
-    PromptController ..> StatisticsService : calls
+    AppController ..> PromptService : calls
+    AppController ..> StatisticsService : calls
 ```
