@@ -8,66 +8,21 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: laravel
-          MYSQL_USER: sail
-          MYSQL_PASSWORD: password
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          extensions: pdo, pdo_mysql, mbstring, bcmath, xml
-
+      # Frontend testing setup
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'yarn'
 
-      - name: Cache Composer dependencies
-        uses: actions/cache@v4
-        with:
-          path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install PHP dependencies
-        run: composer install --no-progress --prefer-dist --optimize-autoloader
-
       - name: Install Node.js dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Copy environment file
-        run: cp .env.example .env || cp .env.ci .env || echo "No env file found"
-
-      - name: Generate application key
-        run: php artisan key:generate
-
-      - name: Set AI service URL for testing
-        run: echo "AI_SERVICE_URL=http://localhost:8001" >> .env
-
-      - name: Run database migrations
-        run: php artisan migrate --force
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: laravel
-          DB_USERNAME: sail
-          DB_PASSWORD: password
-
+      # Frontend testing
       - name: Run TypeScript type checking
         run: yarn types
 
@@ -77,12 +32,13 @@ jobs:
       - name: Run JavaScript/React tests
         run: yarn test
 
+      # Storybook testing
       - name: Build Storybook
         run: yarn build-storybook
 
       - name: Serve Storybook
-        run: npx http-server storybook-static -p 6006 &
-
+        run: npx http-server storybook-static -p 6006 &        
+      
       - name: Wait for Storybook
         run: npx wait-on http://127.0.0.1:6006
 
@@ -92,12 +48,12 @@ jobs:
       - name: Run Storybook Tests
         run: yarn test-storybook
 
-      - name: Run PHP tests
-        run: php artisan test
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
-          DB_DATABASE: laravel
-          DB_USERNAME: sail
-          DB_PASSWORD: password
+      # Backend testing with Docker
+      - name: Start Docker Compose
+        run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d
+
+      - name: Run PHP tests in Docker
+        run: docker exec laravel.app php artisan test
+
+      - name: Stop Docker Compose
+        run: docker-compose -f docker-compose.yml -f docker-compose.test.yml down
