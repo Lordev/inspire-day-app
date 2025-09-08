@@ -1,5 +1,6 @@
 import DashboardHeader from '@/components/dashboard-header';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Settings, User as UserIcon, Lock, Palette } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
@@ -7,9 +8,11 @@ import { type PropsWithChildren } from 'react';
 
 interface SettingsLayoutProps extends PropsWithChildren {
     activeTab?: string;
+    title: string;
+    description: string;
 }
 
-export default function SettingsLayout({ children, activeTab = 'profile' }: SettingsLayoutProps) {
+export default function SettingsLayout({ children, activeTab = 'profile', title, description }: SettingsLayoutProps) {
     return (
         <div className="flex flex-col px-4 md:px-6 h-full">
             <DashboardHeader title='Settings & Preferences'/>
@@ -50,7 +53,16 @@ export default function SettingsLayout({ children, activeTab = 'profile' }: Sett
 
                         <div className="flex-1 overflow-auto">
                             <TabsContent value={activeTab} className="mt-0 h-full">
-                                {children}
+                                <Card className="overflow-hidden border-border shadow-sm">
+                                    <CardHeader className="border-b border-border">
+                                        <CardTitle className="text-xl text-foreground">{title}</CardTitle>
+                                        <CardDescription>{description}</CardDescription>
+                                    </CardHeader>
+
+                                    <CardContent className="p-6">
+                                        {children}
+                                    </CardContent>
+                                </Card>
                             </TabsContent>
                         </div>
                     </Tabs>
