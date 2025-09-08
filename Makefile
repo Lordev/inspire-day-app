@@ -1,6 +1,3 @@
-# Infra helper Makefile
-# Usage: make up | down | build | test | logs | exec
-
 COMPOSE_DIR=.
 
 up:
@@ -21,8 +18,8 @@ logs:
 exec:
 	docker compose -f docker-compose.yml exec laravel.app bash
 
-test:
-	docker compose -f docker-compose.yml -f docker-compose.test.yml run --rm laravel.app php artisan test
-
 migrate:
 	docker compose -f docker-compose.yml exec laravel.app php artisan migrate
+
+clear cache:
+	docker compose -f docker-compose.yml exec laravel.app php artisan optimize:clear
