@@ -1,6 +1,13 @@
-import AppLogoIcon from '@/components/app-logo-icon';
-import { Link } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 import { type PropsWithChildren } from 'react';
+import { 
+    fadeInUp, 
+    floatingCircle, 
+    floatingSquare, 
+    floatingDot, 
+    containerSlideUp, 
+    cardScaleIn 
+} from '@/utils/animations';
 
 interface AuthLayoutProps {
     name?: string;
@@ -10,25 +17,51 @@ interface AuthLayoutProps {
 
 export default function AuthSimpleLayout({ children, title, description }: PropsWithChildren<AuthLayoutProps>) {
     return (
-        <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
-            <div className="w-full max-w-sm">
-                <div className="flex flex-col gap-8">
-                    <div className="flex flex-col items-center gap-4">
-                        <Link href={route('home')} className="flex flex-col items-center gap-2 font-medium">
-                            <div className="mb-1 flex h-9 w-9 items-center justify-center rounded-md">
-                                <AppLogoIcon className="size-9 fill-current text-[var(--foreground)] dark:text-white" />
-                            </div>
-                            <span className="sr-only">{title}</span>
-                        </Link>
-
-                        <div className="space-y-2 text-center">
-                            <h1 className="text-xl font-medium">{title}</h1>
-                            <p className="text-center text-sm text-muted-foreground">{description}</p>
-                        </div>
-                    </div>
-                    {children}
-                </div>
+        <div className="flex min-h-svh items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
+            <div className="absolute inset-0 overflow-hidden">
+                <motion.div
+                    className="absolute top-10 right-[10%] h-32 w-32 rounded-full bg-primary/20 opacity-60"
+                    {...floatingCircle()}
+                />
+                <motion.div
+                    className="absolute bottom-10 left-[10%] h-24 w-24 rounded-lg bg-accent/20 opacity-60"
+                    {...floatingSquare()}
+                />
+                <motion.div
+                    className="absolute top-1/2 left-[5%] h-16 w-16 rounded-full bg-secondary/30 opacity-50"
+                    {...floatingDot()}
+                />
             </div>
+
+            <motion.div
+                className="relative z-10 w-full max-w-md space-y-8"
+                {...containerSlideUp()}
+            >
+                <div className="text-center">
+                    <motion.h1 className="mb-2 text-4xl font-bold text-foreground" {...fadeInUp(0.2)}>
+                        <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                            InspireDay
+                        </span>
+                    </motion.h1>
+                    {title && (
+                        <motion.h2 className="mb-2 text-xl font-medium text-foreground" {...fadeInUp(0.25)}>
+                            {title}
+                        </motion.h2>
+                    )}
+                </div>
+
+                <motion.div
+                    className="rounded-2xl border border-border bg-card p-8 shadow-xl backdrop-blur-sm"
+                    {...cardScaleIn()}
+                >
+                    {description && (
+                        <motion.p className="mb-6 text-center text-sm text-muted-foreground" {...fadeInUp(0.3)}>
+                            {description}
+                        </motion.p>
+                    )}
+                    {children}
+                </motion.div>
+            </motion.div>
         </div>
     );
 }

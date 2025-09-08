@@ -1,4 +1,3 @@
-// Components
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
@@ -35,7 +34,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                             id="email"
                             type="email"
                             name="email"
-                            autoComplete="off"
+                            autoComplete="email"
                             value={data.email}
                             autoFocus
                             onChange={(e) => setData('email', e.target.value)}
