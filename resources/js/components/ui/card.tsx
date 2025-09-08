@@ -1,9 +1,8 @@
 import * as React from "react"
-import { VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div"> & VariantProps<typeof cardHeaderStyles>) {
+function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card"
@@ -16,7 +15,7 @@ function Card({ className, ...props }: React.ComponentProps<"div"> & VariantProp
   )
 }
 
-function CardHeader({ className, children, ...props }: React.ComponentProps<"div"> & VariantProps<typeof cardHeaderVariant>) {
+function CardHeader({ className, children, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-header"

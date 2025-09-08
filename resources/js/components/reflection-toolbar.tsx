@@ -1,8 +1,9 @@
 import { Image as IconImage } from 'lucide-react';
+import type { Editor } from '@tiptap/core';
 
 interface ReflectionToolbarProps {
-    editor: any;
-    editorState: any;
+    editor: Editor | null;
+    editorState: { isLink?: boolean } | null;
     addImage: () => void;
     setLink: () => void;
 }
@@ -39,7 +40,7 @@ export default function ReflectionToolbar({ editor, editorState, addImage, setLi
                     type="button"
                     aria-label="Code"
                     className={`rounded p-2 hover:bg-muted ${editor?.isActive('codeBlock') ? 'is-active bg-muted' : ''}`}
-                    onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                    onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
                 >
                     {'</>'}
                 </button>
@@ -49,7 +50,7 @@ export default function ReflectionToolbar({ editor, editorState, addImage, setLi
                     type="button"
                     aria-label="Heading 1"
                     className={`rounded p-2 hover:bg-muted ${editor?.isActive('textStyle', { fontSize: '32px' }) ? 'is-active bg-muted' : ''}`}
-                    onClick={() => editor.chain().focus().setFontSize('32px').run()}
+                    onClick={() => editor?.chain().focus().setFontSize('32px').run()}
                 >
                     H1
                 </button>
@@ -57,7 +58,7 @@ export default function ReflectionToolbar({ editor, editorState, addImage, setLi
                     type="button"
                     aria-label="Heading 2"
                     className={`rounded p-2 hover:bg-muted ${editor?.isActive('textStyle', { level: 2 }) ? 'is-active bg-muted' : ''}`}
-                    onClick={() => editor.chain().focus().setFontSize('24px').run()}
+                    onClick={() => editor?.chain().focus().setFontSize('24px').run()}
                 >
                     H2
                 </button>
@@ -83,7 +84,7 @@ export default function ReflectionToolbar({ editor, editorState, addImage, setLi
                     type="button"
                     aria-label="Blockquote"
                     className={`rounded p-2 hover:bg-muted ${editor?.isActive('blockquote') ? 'is-active bg-muted' : ''}`}
-                    onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                    onClick={() => editor?.chain().focus().toggleBlockquote().run()}
                 >
                     ❝ ❞
                 </button>

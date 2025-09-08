@@ -2,11 +2,11 @@ import { Head } from '@inertiajs/react'
 import { motion } from 'framer-motion'
 import AppLayout from '@/layouts/app-layout'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Flex, Section } from '@radix-ui/themes'
+import { Flex } from '@radix-ui/themes'
 import { BarChart3, Calendar, Clock, Target, TrendingUp, Users } from 'lucide-react'
 import type { StatisticsData } from '@/types'
 import DashboardHeader from '@/components/dashboard-header'
-import { fadeInUp, containerSlideUp, scaleIn } from '@/utils/animations'
+import { fadeInUp, containerSlideUp } from '@/utils/animations'
 
 interface StatisticProps {
     statistics: StatisticsData['statistics']
@@ -15,11 +15,6 @@ interface StatisticProps {
 }
 
 export default function Statistic({ statistics, trends, insights }: StatisticProps) {
-    const breadcrumbs = [
-        { label: 'Dashboard', href: '/dashboard' },
-        { label: 'Statistics', href: '/statistics' }
-    ]
-
     const statisticCards = [
         {
             title: 'Total Reflections',
@@ -68,7 +63,7 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
     ]
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <AppLayout>
             <Head title="Statistics" />
             <div className="px-4 md:px-6 h-full max-w-5xl">
                 <DashboardHeader title='Statistics'/>

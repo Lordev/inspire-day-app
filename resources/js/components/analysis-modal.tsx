@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { Flex, Section, Heading, Blockquote } from '@radix-ui/themes'
+import { Flex, Section, Blockquote } from '@radix-ui/themes'
 import { SubHeading } from '@/components/ui/subheading'
 import type { Prompt } from '@/types'
 import { useForm } from '@inertiajs/react'
@@ -14,7 +14,7 @@ type AnalysisModalProps = {
 
 export default function AnalysisModal({ prompt, isModalOpen, onClose }: AnalysisModalProps) {
     const [analysis, setAnalysis] = useState<string | null>(null)
-    const { data, setData, post, processing } = useForm({
+    const { setData, post, processing } = useForm({
         response: prompt ? prompt.response : '',
     });
 
@@ -29,7 +29,7 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
         
         setData('response', prompt.response || '');
 
-        post(route('analyzeResponse', { prompt: prompt.id }), {
+        post(route('analyzeResponse', { prompt: prompt.id.toString() }), {
             onSuccess: () => {
                 setAnalysis(prompt.analysis || 'No analysis available');
             },
@@ -41,8 +41,8 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
     };
 
     return (
-        <Dialog open={isModalOpen} onOpenChange={() => onClose()} className="p-8">
-            <DialogContent className="max-w-2xl bg-popover text-popover-foreground">
+        <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
+            <DialogContent className="max-w-2xl bg-popover text-popover-foreground p-8">
                 <DialogTitle>
                 {/* <Heading>{prompt?.prompt}</Heading> */}
                 </DialogTitle>

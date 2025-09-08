@@ -50,7 +50,7 @@ const RadioCardsRoot = React.forwardRef<HTMLDivElement, RadioCardsRootProps>(
 );
 RadioCardsRoot.displayName = 'RadioCards.Root';
 
-const RadioCardsItem = React.forwardRef<HTMLDivElement, RadioCardsItemProps>(
+const RadioCardsItem = React.forwardRef<HTMLButtonElement, RadioCardsItemProps>(
   ({ className, variant, size, ...props }, forwardedRef) => {
     return (
       <RadioGroupItem

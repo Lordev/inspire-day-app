@@ -2,7 +2,7 @@ import { Theme } from '@radix-ui/themes';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider as JotaiProvider } from 'jotai';
 import HistoryItem from './history-item';
-import Prompt from '@/types';
+import { Prompt } from '@/types';
 import { userEvent, within } from '@storybook/test';
 
 const meta: Meta<typeof HistoryItem> = {
@@ -29,6 +29,7 @@ const answeredItem = {
     prompt: 'What made you smile today?',
     response: 'A walk in the park and a nice chat with a friend.',
     status: 'answered',
+    date: '2025-08-27',
     created_at: '2025-08-27T10:00:00Z',
 };
 
@@ -37,6 +38,7 @@ const pendingItem = {
     prompt: 'What are you looking forward to?',
     response: null,
     status: 'pending',
+    date: '2025-08-28',
     created_at: '2025-08-28T08:00:00Z',
 };
 

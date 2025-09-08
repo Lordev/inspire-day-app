@@ -20,7 +20,7 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
                     <CardHeader>
                         <Flex align="center" gap="2">
                             <CalendarDays size={18} />
-                            <Heading asChild size="md" className="text-lg">
+                            <Heading asChild size="4" className="text-lg">
                             <span>Previous Reflections</span>
                         </Heading>
                     </Flex>
@@ -28,7 +28,7 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
                 </CardHeader>
                 <CardContent className="p-4 overflow-x-auto lg:overflow-y-auto">
                     {history.length > 0 ? (
-                            <Flex direction="lg:col row" className="lg:flex-col lg:h-full" gap="3">
+                            <Flex direction="column" className="lg:flex-col lg:h-full" gap="3">
                                     {history.map((item, index) => (
                                         <HistoryItem key={item.id} item={item} index={index} />
                                     ))}

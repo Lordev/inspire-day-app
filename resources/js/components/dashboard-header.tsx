@@ -6,7 +6,7 @@ export default function DashboardHeader({title}: {title?: string}) {
     return (
         <Flex align="center" className="h-[10vh]" gap="4">
             <SidebarTrigger />
-            <Heading variant="accent" size="lg" weight="bold">
+            <Heading size="6" weight="bold">
                 {title || "Your Dashboard"}
             </Heading>
         </Flex>

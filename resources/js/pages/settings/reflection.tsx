@@ -1,4 +1,4 @@
-import { Options, User, type BreadcrumbItem } from '@/types';
+import { Options, User} from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEvent } from 'react';
 import AppLayout from '@/layouts/app-layout';
@@ -9,13 +9,6 @@ import { Flex } from '@radix-ui/themes';
 import { Button } from '@/components/ui/button';
 import { RadioCardsRoot, RadioCardsItem } from '@/components/ui/radio-cards';
 import { Transition } from '@headlessui/react';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Reflection settings',
-        href: '/settings/reflection',
-    },
-];
 
 interface ReflectionProps {
     user: User;
@@ -34,7 +27,7 @@ export default function Reflection({ user, options }: ReflectionProps) {
     };
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <AppLayout>
             <Head title="Reflection settings" />
 
             <SettingsLayout activeTab="reflection" title="Reflection Preferences" description="Customize your daily reflection prompts">
@@ -44,7 +37,7 @@ export default function Reflection({ user, options }: ReflectionProps) {
                         <p className="mb-2 text-sm text-muted-foreground">Choose what areas you'd like to focus on in your reflections</p>
 
                         <div className="hidden md:block">
-                            <RadioCardsRoot value={data.niche} onValueChange={(value) => setData('niche', value)} columns={{ initial: "1", sm: "2" }}>
+                            <RadioCardsRoot value={data.niche} onValueChange={(value) => setData('niche', value)}>
                                 {Object.entries(options.niches).map(([key, value]) => (
                                     <RadioCardsItem key={key} value={key} variant="secondary">
                                         {value}
@@ -74,7 +67,7 @@ export default function Reflection({ user, options }: ReflectionProps) {
                         <p className="mb-2 text-sm text-muted-foreground">Select the tone and approach for your daily prompts</p>
 
                         <div className="hidden md:block">
-                            <RadioCardsRoot value={data.tone} onValueChange={(value) => setData('tone', value)} columns={{ initial: "1", sm: "2" }}>
+                            <RadioCardsRoot value={data.tone} onValueChange={(value) => setData('tone', value)}>
                                 {Object.entries(options.tones).map(([key, value]) => (
                                     <RadioCardsItem key={key} value={key} variant="secondary">
                                         {value}

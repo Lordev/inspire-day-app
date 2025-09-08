@@ -18,4 +18,3 @@ function Blockquote({ children, className = '', ...props }: BlockquoteProps) {
 Blockquote.displayName = 'Blockquote';
 
 export { Blockquote };
-export type { BlockquoteProps };

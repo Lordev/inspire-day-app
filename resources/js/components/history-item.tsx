@@ -1,6 +1,6 @@
 import { currentPromptAtom } from '@/lib/atoms';
 import { Prompt } from '@/types';
-import { Flex, Grid } from '@radix-ui/themes';
+import { Flex } from '@radix-ui/themes';
 import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { Sparkles } from 'lucide-react';
@@ -28,7 +28,7 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
     const [currentPrompt, setCurrentPrompt] = useAtom(currentPromptAtom);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleEdit = (e: React.MouseEvent<HTMLAnchorElement>, item: Prompt) => {
+    const handleEdit = (e: React.MouseEvent, item: Prompt) => {
         e.preventDefault();
         setCurrentPrompt(item);
     };

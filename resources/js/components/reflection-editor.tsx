@@ -21,7 +21,7 @@ import { useEffect } from 'react';
 
 export default function ReflectionEditor() {
     const [currentPrompt] = useAtom(currentPromptAtom);
-    const { data, setData, post, processing } = useForm({
+    const { setData, post, processing } = useForm({
         response: currentPrompt?.response || '',
     });
     
@@ -63,7 +63,6 @@ export default function ReflectionEditor() {
                 },
             }),
             Placeholder.configure({ placeholder: 'Write your reflection here...' }),
-            DragHandle,
         ],
         content: currentPrompt?.response || '',
         onUpdate: ({ editor }) => {
@@ -98,7 +97,8 @@ export default function ReflectionEditor() {
         try {
             editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
         } catch (e) {
-            alert(e.message);
+            const error = e as Error;
+            alert(error.message);
         }
     }, [editor]);
 

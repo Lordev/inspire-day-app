@@ -43,7 +43,6 @@ export const floatingCircle = (duration = 15, delay = 0) => ({
     transition: {
         duration,
         repeat: Infinity,
-        ease: 'easeInOut',
         delay,
     },
 });
@@ -56,7 +55,6 @@ export const floatingSquare = (duration = 12, delay = 1) => ({
     transition: {
         duration,
         repeat: Infinity,
-        ease: 'easeInOut',
         delay,
     },
 });
@@ -69,7 +67,6 @@ export const floatingDot = (duration = 8, delay = 2) => ({
     transition: {
         duration,
         repeat: Infinity,
-        ease: 'easeInOut',
         delay,
     },
 });
