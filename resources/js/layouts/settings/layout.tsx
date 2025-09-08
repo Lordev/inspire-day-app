@@ -5,6 +5,7 @@ import { Settings, User as UserIcon, Lock, Palette } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
+import { containerSlideUp } from '@/utils/animations';
 
 interface SettingsLayoutProps extends PropsWithChildren {
     activeTab?: string;
@@ -18,9 +19,7 @@ export default function SettingsLayout({ children, activeTab = 'profile', title,
             <DashboardHeader title='Settings & Preferences'/>
             <div className="flex h-full max-w-2xl flex-1 flex-col overflow-hidden">
                 <motion.div 
-                    initial={{ opacity: 0, y: 20 }} 
-                    animate={{ opacity: 1, y: 0 }} 
-                    transition={{ duration: 0.5 }}
+                    {...containerSlideUp()}
                     className="flex-1 flex flex-col"
                 >
                     <Tabs value={activeTab} className="flex-1 flex flex-col">

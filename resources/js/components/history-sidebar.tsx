@@ -4,6 +4,7 @@ import { Prompt } from '@/types';
 import { motion } from 'framer-motion';
 import { CalendarDays } from 'lucide-react';
 import HistoryItem from '@/components/history-item';
+import { containerSlideUp } from '@/utils/animations';
 
 interface HistorySidebarProps {
     history: Prompt[];
@@ -13,9 +14,7 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
     return (
         <motion.div
             className="lg:col-span-1 max-h-[85vh] overflow-hidden"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            {...containerSlideUp(0.2)}
         >
                 <Card className="pb-1 h-full">
                     <CardHeader>

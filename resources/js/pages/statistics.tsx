@@ -6,6 +6,7 @@ import { Flex, Section } from '@radix-ui/themes'
 import { BarChart3, Calendar, Clock, Target, TrendingUp, Users } from 'lucide-react'
 import type { StatisticsData } from '@/types'
 import DashboardHeader from '@/components/dashboard-header'
+import { fadeInUp, containerSlideUp, scaleIn } from '@/utils/animations'
 
 interface StatisticProps {
     statistics: StatisticsData['statistics']
@@ -71,18 +72,12 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
             <Head title="Statistics" />
             <div className="px-4 md:px-6 h-full max-w-5xl">
                 <DashboardHeader title='Statistics'/>
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }} 
-                    animate={{ opacity: 1, y: 0 }} 
-                    transition={{ duration: 0.5 }}
-                >
+                <motion.div {...containerSlideUp()}>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {statisticCards.map((card, index) => (
                                 <motion.div
                                     key={card.title}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                                    {...fadeInUp(index * 0.1)}
                                 >
                                     <Card className="hover:shadow-lg transition-shadow duration-300">
                                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -106,9 +101,7 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
 
                     {statistics && (
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.6 }}
+                            {...fadeInUp(0.6)}
                             className="mt-8"
                         >
                             <Card className="border-border">

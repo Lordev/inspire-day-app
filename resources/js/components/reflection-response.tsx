@@ -4,6 +4,7 @@ import { Prompt } from '@/types';
 import * as Dialog from '@radix-ui/react-dialog';
 import { motion } from 'framer-motion';
 import { Pencil } from 'lucide-react';
+import { fadeInUp } from '@/utils/animations';
 
 interface ReflectionResponseProps {
     prompt: Prompt
@@ -11,7 +12,7 @@ interface ReflectionResponseProps {
 
 export default function ReflectionResponse({ prompt }: ReflectionResponseProps) {
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+        <motion.div {...fadeInUp()}>
             <Heading asChild size="md" className="mb-3 text-lg text-foreground">
                 <h4>Your Reflection:</h4>
             </Heading>

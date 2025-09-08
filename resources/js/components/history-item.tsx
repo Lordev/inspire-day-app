@@ -10,6 +10,7 @@ import ReflectionModal from './analysis-modal';
 import { Button } from './ui/button';
 import { useEffect } from 'react';
 import { Link } from '@inertiajs/react';
+import { fadeInUp } from '@/utils/animations';
 
 interface HistoryItemProps {
     item: Prompt;
@@ -45,7 +46,7 @@ export default function HistoryItem({ item, index }: HistoryItemProps) {
     const strippedResponse = stripHtmlTags(item.response || '');
 
     return (
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: 0.1 * index }}>
+        <motion.div {...fadeInUp(0.1 * index)}>
             <Link href="#" onClick={(e) => handleEdit(e, item)} className="block">
             <Flex
                 direction="column"

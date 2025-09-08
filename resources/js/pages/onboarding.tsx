@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { LoaderCircle } from 'lucide-react';
 import { RadioCardsRoot, RadioCardsItem } from '@/components/ui/radio-cards';
+import { containerSlideUp, floatingCircle, floatingSquare, floatingDot } from '@/utils/animations';
 
 interface Props {
     options: {
@@ -44,49 +45,21 @@ export default function Onboarding({ options }: Props) {
             <div className="absolute inset-0 overflow-hidden -z-10">
                 <motion.div 
                     className="absolute top-10 right-[10%] w-64 h-64 rounded-full bg-primary/20"
-                    animate={{ 
-                        scale: [1, 1.2, 1],
-                        rotate: [0, 10, 0]
-                    }}
-                    transition={{ 
-                        duration: 15,
-                        repeat: Infinity,
-                        ease: "easeInOut" 
-                    }}
+                    {...floatingCircle()}
                 />
                 <motion.div 
                     className="absolute bottom-10 left-[15%] w-40 h-40 rounded-full bg-secondary/30"
-                    animate={{ 
-                        scale: [1, 1.1, 1],
-                        rotate: [0, -10, 0]
-                    }}
-                    transition={{ 
-                        duration: 12,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 1
-                    }}
+                    {...floatingSquare()}
                 />
                 <motion.div 
                     className="absolute top-[30%] left-[5%] w-24 h-24 rounded-lg bg-accent/25"
-                    animate={{ 
-                        scale: [1, 1.3, 1],
-                        rotate: [0, 20, 0]
-                    }}
-                    transition={{ 
-                        duration: 10,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 0.5
-                    }}
+                    {...floatingDot()}
                 />
             </div>
 
             <motion.div 
                 className="max-w-xl w-full relative"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                {...containerSlideUp()}
             >
                 <Card className="shadow-xl border-border">
                     <CardHeader className="text-center">
