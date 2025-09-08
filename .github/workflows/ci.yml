@@ -80,11 +80,20 @@ jobs:
       - name: Build Storybook
         run: yarn build-storybook
 
-      - name: Run Storybook tests
-        run: yarn test:stories
+      - name: Serve Storybook
+        run: npx http-server storybook-static -p 6006 &
+
+      - name: Wait for Storybook
+        run: npx wait-on http://127.0.0.1:6006
+
+      - name: Install Playwright Browsers
+        run: yarn playwright install
+
+      - name: Run Storybook Tests
+        run: yarn test-storybook
 
       - name: Run PHP tests
-        run: php artisan test --verbose
+        run: php artisan test
         env:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1

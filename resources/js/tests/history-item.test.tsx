@@ -33,7 +33,7 @@ describe('HistoryItem', () => {
                 <HistoryItem item={mockPrompt} index={0} />
             </Provider>,
         );
-        const eye = screen.getByTitle('View journal');
+        const eye = screen.getByTitle('Analyze reflection');
         expect(eye).toBeTruthy();
     });
 
@@ -45,7 +45,7 @@ describe('HistoryItem', () => {
                 <HistoryItem item={unansweredPrompt} index={0} />
             </Provider>,
         );
-        const eye = screen.getByTitle('View journal');
+        const eye = screen.getByTitle('Analyze reflection');
         expect(eye).toBeTruthy();
         expect(eye.classList.contains('opacity-50')).toBe(true);
     });
