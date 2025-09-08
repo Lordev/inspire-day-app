@@ -121,7 +121,7 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
                                         <div className="bg-muted/50 border border-border rounded-lg p-4">
                                             <p className="text-foreground">
                                                 You've created <span className="font-semibold text-primary">{statistics.totalReflections}</span> total reflections, 
-                                                with <span className="font-semibold text-primary">{trends.recent_reflections}</span> in the last 30 days.
+                                                with <span className="font-semibold text-primary">{trends.recent_reflections}</span> recent reflections in the last 30 days.
                                             </p>
                                         </div>
                                         
@@ -129,9 +129,12 @@ export default function Statistic({ statistics, trends, insights }: StatisticPro
                                             <div className="bg-muted/50 border border-border rounded-lg p-4">
                                                 <p className="text-foreground">
                                                     Your most active day is <span className="font-semibold text-primary">{statistics.mostActiveDay}</span>.
+                                                    <span> Your reflections average <span className="font-semibold text-primary">
                                                     {statistics.averageReflectionLength && (
-                                                        <span> Your reflections average <span className="font-semibold text-primary">{Math.round(statistics.averageReflectionLength)}</span> characters.</span>
+                                                        <span>
+                                                        {Math.round(statistics.averageReflectionLength)}</span>
                                                     )}
+                                                    </span> characters in length.</span>
                                                 </p>
                                             </div>
                                         )}
