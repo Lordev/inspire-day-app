@@ -17,7 +17,7 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
         >
-                <Card className="pb-1 h-full bg-card/80">
+                <Card className="pb-1 h-full">
                     <CardHeader>
                         <Flex align="center" gap="2">
                             <CalendarDays size={18} />
