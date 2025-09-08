@@ -2,7 +2,7 @@ name: Test Web App
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, fix-ci-pipeline ]
 
 jobs:
   test:
