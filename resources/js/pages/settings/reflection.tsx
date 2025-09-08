@@ -55,9 +55,7 @@ export default function Reflection({ user, options }: ReflectionProps) {
                                     <RadioCardsRoot value={data.niche} onValueChange={(value) => setData('niche', value)} columns={{ initial: "1", sm: "2" }}>
                                         {Object.entries(options.niches).map(([key, value]) => (
                                             <RadioCardsItem key={key} value={key} variant="secondary">
-                                                <Flex direction="column" width="100%">
-                                                    <span className="text-foreground font-bold">{value}</span>
-                                                </Flex>
+                                                {value}
                                             </RadioCardsItem>
                                         ))}
                                     </RadioCardsRoot>
@@ -79,19 +77,15 @@ export default function Reflection({ user, options }: ReflectionProps) {
                                 </div>
                             </Flex>
 
-                            {/* Reflection Style Section */}
                             <Flex direction="column" gap="4">
                                 <Label className="text-lg font-semibold text-foreground">Reflection Style</Label>
                                 <p className="mb-2 text-sm text-muted-foreground">Select the tone and approach for your daily prompts</p>
 
-                                {/* Desktop: Radio Cards */}
                                 <div className="hidden md:block">
                                     <RadioCardsRoot value={data.tone} onValueChange={(value) => setData('tone', value)} columns={{ initial: "1", sm: "2" }}>
                                         {Object.entries(options.tones).map(([key, value]) => (
                                             <RadioCardsItem key={key} value={key} variant="secondary">
-                                                <Flex direction="column" width="100%">
-                                                    <span className="font-bold text-foreground">{value}</span>
-                                                </Flex>
+                                                {value}
                                             </RadioCardsItem>
                                         ))}
                                     </RadioCardsRoot>

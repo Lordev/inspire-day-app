@@ -8,16 +8,21 @@ const radioCardsRootVariants = cva(
 );
 
 const radioCardsItemVariants = cva(
-  "cursor-pointer rounded-lg border-2 p-4 transition-all hover:shadow-md flex items-center justify-between border-border bg-card text-foreground data-[state=checked]:shadow-sm",
+  "cursor-pointer rounded-lg border-2 transition-all hover:shadow-md flex items-center justify-between border-border bg-card text-foreground data-[state=checked]:shadow-sm flex justify-center w-full",
   {
     variants: {
       variant: {
         default: "hover:border-primary/50 data-[state=checked]:border-primary data-[state=checked]:bg-primary/10",
         secondary: "hover:border-secondary data-[state=checked]:border-secondary data-[state=checked]:bg-secondary/80",
       },
+      size: {
+        default: "p-4",
+        large: "p-4 h-24",
+      },
     },
     defaultVariants: {
       variant: "default",
+      size: "default",
     },
   }
 );
@@ -46,12 +51,12 @@ const RadioCardsRoot = React.forwardRef<HTMLDivElement, RadioCardsRootProps>(
 RadioCardsRoot.displayName = 'RadioCards.Root';
 
 const RadioCardsItem = React.forwardRef<HTMLDivElement, RadioCardsItemProps>(
-  ({ className, variant, ...props }, forwardedRef) => {
+  ({ className, variant, size, ...props }, forwardedRef) => {
     return (
       <RadioGroupItem
         {...props}
         ref={forwardedRef}
-        className={cn(radioCardsItemVariants({ variant }), className)}
+        className={cn(radioCardsItemVariants({ variant, size }), className)}
       />
     );
   }
