@@ -1,6 +1,6 @@
 [submodule "InspireDay-ai-service"]
 	path = InspireDay-ai-service
-	url = ../InspireDay-ai-service
+	url = https://github.com/Lordev/inspireday-ai-service.git
 [submodule "InspireDay-web"]
 	path = InspireDay-web
-	url = ../InspireDay-web
+	url = https://github.com/Lordev/inspireday-web.git
