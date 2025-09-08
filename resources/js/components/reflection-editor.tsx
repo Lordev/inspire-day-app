@@ -1,7 +1,7 @@
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useForm } from '@inertiajs/react';
-import { Flex, ScrollArea } from '@radix-ui/themes';
+import { Flex } from '@radix-ui/themes';
 import Blockquote from '@tiptap/extension-blockquote';
 import CodeBlock from '@tiptap/extension-code-block';
 import DragHandle from '@tiptap/extension-drag-handle-react';
@@ -27,7 +27,13 @@ export default function ReflectionEditor() {
     
     const editor = useEditor({
         extensions: [
-            StarterKit,
+            StarterKit.configure({
+                blockquote: false,
+                codeBlock: false,
+                bulletList: false,
+                orderedList: false,
+                link: false
+            }),
             TextStyle,
             FontSize,
             Image,
