@@ -56,13 +56,15 @@ export const Pending: Story = {
 
 Answered.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const viewBtn = await canvas.getByLabelText('View journal');
-    await userEvent.click(viewBtn);
+    const analyzeBtn = await canvas.getByLabelText('Analyze reflection');
+    await userEvent.click(analyzeBtn);
     await within(document.body).findByRole('button', { name: /close/i });
 };
 
 Pending.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const viewBtn = await canvas.getByLabelText('View journal');
-    if (!viewBtn.disabled) throw new Error('expected view button to be disabled for pending item');
+    const analyzeBtns = canvas.queryAllByLabelText('Analyze reflection');
+    if (analyzeBtns.length > 0 && analyzeBtns[0].className.includes('invisible') === false) {
+        throw new Error('expected analyze button to not be available for pending item');
+    }
 };
