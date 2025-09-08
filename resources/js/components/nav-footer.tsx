@@ -1,32 +1,53 @@
-import { Icon } from '@/components/icon';
 import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
+import { Link } from '@inertiajs/react';
+import { LogOut, Clock } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { type ComponentPropsWithoutRef } from 'react';
 
 export function NavFooter({
-    items,
     className,
     ...props
 }: ComponentPropsWithoutRef<typeof SidebarGroup> & {
-    items: NavItem[];
 }) {
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    const formatTime = (date: Date) => {
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+    };
+
     return (
         <SidebarGroup {...props} className={`group-data-[collapsible=icon]:p-0 ${className || ''}`}>
             <SidebarGroupContent>
                 <SidebarMenu>
-                    {items.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                            <SidebarMenuButton
-                                asChild
-                                className="text-neutral-600 hover:text-neutral-800 dark:text-neutral-300 dark:hover:text-neutral-100"
-                            >
-                                <a href={item.href} target="_blank" rel="noopener noreferrer">
-                                    {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
-                                    <span>{item.title}</span>
-                                </a>
-                            </SidebarMenuButton>
-                        </SidebarMenuItem>
-                    ))}
+                    {/* Current Time */}
+                    <SidebarMenuItem>
+                        <SidebarMenuButton className="text-muted-foreground cursor-default hover:bg-transparent">
+                            <Clock className="h-4 w-4" />
+                            <span className="text-sm">{formatTime(currentTime)}</span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+
+                    {/* Logout Button */}
+                    <SidebarMenuItem>
+                        <SidebarMenuButton asChild className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                            <Link href={route('logout')} method="post" as="button">
+                                <LogOut className="h-4 w-4" />
+                                <span>Logout</span>
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>
