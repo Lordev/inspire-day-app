@@ -110,7 +110,7 @@ export default function Register() {
                 </div>
             </form>
 
-            <div className="space-x-1 text-center text-sm text-muted-foreground">
+            <div className="space-x-1 text-center text-sm text-muted-foreground mt-6">
                 <span>Already have an account?</span>
                 <TextLink href={route('login')}>Sign in</TextLink>
             </div>

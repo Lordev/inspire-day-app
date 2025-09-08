@@ -102,7 +102,7 @@ export default function Login({ status, canResetPassword }: { status?: string; c
                 </div>
             </form>
 
-            <div className="space-x-1 text-center text-sm text-muted-foreground">
+            <div className="space-x-1 text-center text-sm text-muted-foreground mt-6">
                 <span>Don't have an account?</span>
                 <TextLink href={route('register')}>Sign up</TextLink>
             </div>
