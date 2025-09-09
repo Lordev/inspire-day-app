@@ -1,0 +1,59 @@
+name: Test Web App
+
+on:
+  push:
+    branches: [ master, fix-ci-pipeline ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Frontend testing setup
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+
+      - name: Install Node.js dependencies
+        run: yarn install --frozen-lockfile
+
+      # Frontend testing
+      - name: Run TypeScript type checking
+        run: yarn types
+
+      - name: Run ESLint
+        run: yarn lint
+
+      - name: Run JavaScript/React tests
+        run: yarn test
+
+      # Storybook testing
+      - name: Build Storybook
+        run: yarn build-storybook
+
+      - name: Serve Storybook
+        run: npx http-server storybook-static -p 6006 &        
+      
+      - name: Wait for Storybook
+        run: npx wait-on http://127.0.0.1:6006
+
+      - name: Install Playwright Browsers
+        run: yarn playwright install
+
+      - name: Run Storybook Tests
+        run: yarn test-storybook
+
+      # Backend testing with Docker
+      - name: Start Docker Compose
+        run: docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d
+
+      - name: Run PHP tests in Docker
+        run: docker exec laravel.app php artisan test
+
+      - name: Stop Docker Compose
+        run: docker-compose -f docker-compose.yml -f docker-compose.test.yml down
