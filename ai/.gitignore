@@ -1,0 +1,21 @@
+.env
+logs/
+# Python cache and temp files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env/
+venv/
+build/
+dist/
+.pytest_cache/
+# FastAPI/uvicorn cache
+.mypy_cache/
+.coverage
+# Docker artifacts
+*.db
+*.sqlite3
+# VSCode
+.vscode/
