@@ -18,6 +18,15 @@ class Prompt extends Model
         'analysis',
     ];
 
+    protected static function booted()
+    {
+        static::creating(function ($prompt) {
+            if (is_null($prompt->status)) {
+                $prompt->status = 'unanswered';
+            }
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -25,6 +34,6 @@ class Prompt extends Model
 
     public function isAnswered()
     {
-        return !empty($this->response);
+        return !empty(trim($this->response));
     }
 }
