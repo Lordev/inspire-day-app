@@ -16,14 +16,22 @@ class StatisticsService
             ->selectRaw('AVG(LENGTH(response)) as avg_length')
             ->first();
 
+        $mostActiveDay = $user->prompts()
+            ->get()
+            ->groupBy(function ($prompt) {
+                return Carbon::parse($prompt->date)->format('l'); // Group by day of the week
+            })
+            ->map(function ($group) {
+                return $group->count();
+            })
+            ->sortDesc()
+            ->keys()
+            ->first();
+
         return [
             'totalReflections' => $user->prompts()->count(),
-            'averageReflectionLength' => $avgLength ? round($avgLength->avg_length) : 0,
-            'mostActiveDay' => $user->prompts()
-                ->selectRaw('DAYNAME(date) as day, COUNT(*) as count')
-                ->groupBy('day')
-                ->orderByDesc('count')
-                ->first()->day ?? null,
+            'averageReflectionLength' => $avgLength ? (int) round($avgLength->avg_length) : 0,
+            'mostActiveDay' => $mostActiveDay,
         ];
     }
 
@@ -54,6 +62,6 @@ class StatisticsService
             ];
         });
 
-        return $insights;
+        return $insights->toArray();
     }
 }
