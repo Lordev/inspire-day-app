@@ -25,4 +25,5 @@ enum Niche: string
             $case->value => $case->label()
         ])->toArray();
     }
+    
 }

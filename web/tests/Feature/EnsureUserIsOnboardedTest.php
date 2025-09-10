@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Enums\Niche;
+use App\Enums\Tone;
 
 class EnsureUserIsOnboardedTest extends TestCase
 {
@@ -21,8 +23,8 @@ class EnsureUserIsOnboardedTest extends TestCase
     public function it_allows_access_for_onboarded_users()
     {
         $user = User::factory()->create([
-            'niche' => 'technology',
-            'tone' => 'professional',
+            'niche' => Niche::PERSONAL_GROWTH,
+            'tone' => Tone::PROFESSIONAL,
         ]);
 
         $response = $this->actingAs($user)->get('/dashboard');

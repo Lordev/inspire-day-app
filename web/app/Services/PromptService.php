@@ -21,13 +21,17 @@ class PromptService
     
     public function generatePromptForUser(User $user): string
     {
-        $niche = $user->niche ?: Niche::PERSONAL_GROWTH->value;
-        $tone = $user->tone ?: Tone::REFLECTIVE->value;
-        
+        $niche = $user->niche instanceof Niche
+            ? $user->niche
+            : Niche::from($user->niche ?? Niche::PERSONAL_GROWTH->value);
+        $tone = $user->tone instanceof Tone
+            ? $user->tone
+            : Tone::from($user->tone ?? Tone::REFLECTIVE->value);
+
         try {
             $response = Http::timeout(30)->post(env('AI_SERVICE_URL') . '/generate', [
-                'niche' => $niche,
-                'tone' => $tone,
+                'niche' => $niche->value,
+                'tone' => $tone->value,
             ]);
 
             // Log the response for debugging
@@ -66,7 +70,7 @@ class PromptService
         }
     }
 
-    private function getFallbackPrompt(string $niche): string
+    private function getFallbackPrompt(Niche $niche): string
     {
         $templates = [
             Niche::PERSONAL_GROWTH->value => [
@@ -91,7 +95,7 @@ class PromptService
             ],
         ];
         
-        $prompts = $templates[$niche] ?? $templates[Niche::PERSONAL_GROWTH->value];
+        $prompts = $templates[$niche->value] ?? $templates[Niche::PERSONAL_GROWTH->value];
         return $prompts[array_rand($prompts)];
     }
 
