@@ -97,7 +97,6 @@ class AppController extends Controller
             'response' => 'required|string',
         ]);
 
-
         try {
             $analysis = $this->promptService->analyzeResponse(
                 $prompt->prompt,
@@ -105,9 +104,19 @@ class AppController extends Controller
             );
 
             $prompt->update(['analysis' => $analysis]);
+            
+            // Return the updated prompt data
+            return response()->json([
+                'success' => true,
+                'analysis' => $analysis,
+                'prompt' => $prompt->fresh()
+            ]);
 
         } catch (\Exception $e) {
-            return back()->withErrors(['analysis' => 'Failed to analyze response. Please try again.']);
+            return response()->json([
+                'success' => false,
+                'error' => 'Failed to analyze response. Please try again.'
+            ], 500);
         }
     }
 

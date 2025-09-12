@@ -1,10 +1,12 @@
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog'
+import { Dialog, DialogTitle, DialogContent, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Flex, Section, Blockquote } from '@radix-ui/themes'
 import { SubHeading } from '@/components/ui/subheading'
+import { currentPromptAtom } from '@/lib/atoms'
 import type { Prompt } from '@/types'
-import { useForm } from '@inertiajs/react'
 import { useState, useEffect } from 'react'
+import { useAtom } from 'jotai'
+import axios from 'axios'
 
 type AnalysisModalProps = {
     prompt: Prompt | null
@@ -12,41 +14,56 @@ type AnalysisModalProps = {
     onClose: () => void
 }
 
+type AnalysisResponse = {
+    success: boolean
+    analysis?: string
+    error?: string
+}
+
 export default function AnalysisModal({ prompt, isModalOpen, onClose }: AnalysisModalProps) {
     const [analysis, setAnalysis] = useState<string | null>(null)
-    const { setData, post, processing } = useForm({
-        response: prompt ? prompt.response : '',
-    });
+    const [currentPrompt, setCurrentPrompt] = useAtom(currentPromptAtom)
+    const [processing, setProcessing] = useState(false)
 
     useEffect(() => {
-        if (prompt?.analysis === null) {
-            setAnalysis(null); 
-        }
-    }, [prompt]);
+        setAnalysis(prompt?.analysis || null);
+    }, [prompt?.analysis]);
 
-    const analyzeResponse = () => {
+    const analyzeResponse = async () => {
         if (!prompt?.id) return;
         
-        setData('response', prompt.response || '');
-
-        post(route('analyzeResponse', { prompt: prompt.id.toString() }), {
-            onSuccess: () => {
-                setAnalysis(prompt.analysis || 'No analysis available');
-            },
-            onError: (e) => {
-                // Handle error
-                console.error(e)
-            },
-        });
+        setProcessing(true);
+        
+        try {
+            const response = await axios.post(`/api/prompt/${prompt.id}/analyze`, {
+                response: prompt.response || ''
+            });
+            
+            const data = response.data as AnalysisResponse;
+            if (data.success && data.analysis) {
+                setAnalysis(data.analysis);
+                
+                if (currentPrompt && currentPrompt.id === prompt.id) {
+                    setCurrentPrompt({
+                        ...currentPrompt,
+                        analysis: data.analysis
+                    });
+                }
+            } else {
+                setAnalysis('No analysis available');
+            }
+        } catch (error) {
+            console.error('Analysis error:', error);
+            setAnalysis(null);
+        } finally {
+            setProcessing(false);
+        }
     };
 
     return (
         <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
             <DialogContent className="max-w-2xl bg-popover text-popover-foreground p-8">
-                <DialogTitle>
-                {/* <Heading>{prompt?.prompt}</Heading> */}
-                </DialogTitle>
-                
+                <DialogTitle className="mb-2">Reflection Analysis</DialogTitle>
                 <DialogDescription className="sr-only">
                     View your completed reflection and AI analysis
                 </DialogDescription>
@@ -83,12 +100,12 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
                                         <span className="text-sm font-medium text-primary">AI Insights</span>
                                     </div>
                                     <Blockquote className="text-foreground leading-relaxed">
-                                        {prompt?.analysis || analysis}
+                                        {currentPrompt?.analysis || analysis}
                                     </Blockquote>
                                 </div>
                             )}
 
-                            {!prompt?.response && (
+                            {!currentPrompt?.response && !prompt?.response && (
                                 <div className="text-center py-8">
                                     <p className="text-muted-foreground">Complete your reflection to get AI analysis</p>
                                 </div>
