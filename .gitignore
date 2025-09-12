@@ -8,7 +8,7 @@ logs/
 *.orig
 
 # PHP / Composer
-InspireDay-app/vendor/
+web/vendor/
 
 # Node Modules
 node_modules/

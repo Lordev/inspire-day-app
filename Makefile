@@ -1,25 +1,47 @@
-COMPOSE_DIR=.
+COMPOSE=docker compose -f docker-compose.yml
+
+# Setup CI environment - handle all the complex setup tasks
+setup-ci:
+	# Prepare all env files from their examples
+	find . -name ".env.example" -exec sh -c 'dir=$$(dirname "$$1"); [ ! -f "$$dir/.env" ] && cp "$$1" "$$dir/.env"' _ {} \;
 
 up:
-	docker compose -f docker-compose.yml up -d --build
+	$(COMPOSE) up -d --build
 
+# Run Laravel tests using the test override compose file
 test:
-	docker compose -p inspireday_test -f docker-compose.yml -f docker-compose.test.yml run --rm --no-deps laravel.app php artisan test
+	$(COMPOSE) -p inspireday_test -f docker-compose.test.yml run --rm --no-deps laravel.app sh -c "php artisan test --do-not-cache-result --env=testing"
 
+# Stop and remove containers + volumes
 down:
-	docker compose -f docker-compose.yml down --volumes
+	$(COMPOSE) down --volumes
 
 build:
-	docker compose -f docker-compose.yml build
+	$(COMPOSE) build
 
 logs:
-	docker compose -f docker-compose.yml logs -f
+	$(COMPOSE) logs -f
 
+# Exec into the Laravel container
 exec:
-	docker compose -f docker-compose.yml exec laravel.app bash
+	$(COMPOSE) exec laravel.app bash
 
+# Exec into the AI service container
+exec-ai:
+	$(COMPOSE) exec api bash
+
+# Run migrations inside the Laravel container
 migrate:
-	docker compose -f docker-compose.yml exec laravel.app php artisan migrate
+	$(COMPOSE) exec laravel.app php artisan migrate
 
-clear cache:
-	docker compose -f docker-compose.yml exec laravel.app php artisan optimize:clear
+# Start only the AI service
+ai-up:
+	$(COMPOSE) up -d api
+
+# Run AI service tests (assumes pytest inside the ai image)
+ai-test:
+	$(COMPOSE) run --rm api pytest
+
+# Clear Laravel caches
+clear-cache:
+	$(COM

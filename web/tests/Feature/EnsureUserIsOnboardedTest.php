@@ -10,6 +10,13 @@ class EnsureUserIsOnboardedTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        \Illuminate\Support\Facades\Http::fake();
+    }
+
     /** @test */
     public function it_allows_access_for_onboarded_users()
     {

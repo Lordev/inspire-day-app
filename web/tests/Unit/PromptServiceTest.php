@@ -6,20 +6,32 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Services\PromptService;
 use Illuminate\Support\Facades\Http;
+use App\Enums\Niche;
+use App\Enums\Tone;
 
 class PromptServiceTest extends TestCase
 {
     public function test_generate_prompt_for_user()
     {
         Http::fake([
-            env('AI_SERVICE_URL') . '/generate' => Http::response(['output' => 'Mocked prompt!'], 200),
+            'http://test-ai-service/generate' => Http::response(null, 200),
         ]);
 
-        $user = User::factory()->make(['niche' => 'productivity', 'tone' => 'strict']);
+        $user = User::factory()->make([
+            'niche' => Niche::BUSINESS->value, 
+            'tone' => Tone::CASUAL->value
+        ]);
+        
         $service = app(PromptService::class);
 
         $prompt = $service->generatePromptForUser($user);
 
-        $this->assertEquals('Mocked prompt!', $prompt);
+        $businessPrompts = [
+            'What value did you create in your work today?',
+            'How did you advance your career goals today?',
+            'What business insight did you gain today?',
+        ];
+        $this->assertContains($prompt, $businessPrompts);
     }
+
 }

@@ -1,11 +1,6 @@
 services:
   laravel.app:
     env_file:
-      - ./InspireDay-web/.env.testing
+      - ./web/.env
     environment:
       APP_ENV: testing
-      # force non-persistent sessions for tests
-      SESSION_DRIVER: array
-      SESSION_DOMAIN: ""
-      SESSION_SECURE_COOKIE: "false"
-      SESSION_SAME_SITE: lax

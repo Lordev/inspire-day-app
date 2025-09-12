@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Enums\Niche;
+use App\Enums\Tone;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,9 +16,7 @@ class DashboardTest extends TestCase
     {
         parent::setUp();
 
-        \Illuminate\Support\Facades\Http::fake([
-            env('AI_SERVICE_URL') . '/generate*' => \Illuminate\Support\Facades\Http::response(['output' => 'Mocked prompt!'], 200),
-    ]);
+        \Illuminate\Support\Facades\Http::fake();
     }
 
     public function test_guests_are_redirected_to_the_login_page()
@@ -28,11 +28,11 @@ class DashboardTest extends TestCase
     {
         $this->actingAs(
             $user = User::factory()->create([
-                'niche' => 'technology', // User has completed onboarding
-                'tone' => 'professional',
+                'niche' => Niche::BUSINESS->value, // User has completed onboarding
+                'tone' => Tone::PROFESSIONAL->value,
             ])
         );
 
         $this->get('/dashboard')->assertOk();
-}
+    }
 }
