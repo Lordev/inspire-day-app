@@ -3,8 +3,8 @@ import { Heading, Flex } from '@radix-ui/themes';
 import { Prompt } from '@/types';
 import { motion } from 'framer-motion';
 import { CalendarDays } from 'lucide-react';
-import HistoryItem from '@/components/history-item';
 import { containerSlideUp } from '@/utils/animations';
+import HistoryList from './history-list';
 
 interface HistorySidebarProps {
     history: Prompt[];
@@ -29,9 +29,7 @@ export default function HistorySidebar({ history }: HistorySidebarProps) {
                 <CardContent className="p-4 overflow-x-auto lg:overflow-y-auto">
                     {history.length > 0 ? (
                             <Flex direction="column" className="lg:flex-col lg:h-full" gap="3">
-                                    {history.map((item, index) => (
-                                        <HistoryItem key={item.id} item={item} index={index} />
-                                    ))}
+                                    <HistoryList items={history} />
                             </Flex>
                     ) : (
                         <Flex direction="column" align="center" className="py-8 text-center">

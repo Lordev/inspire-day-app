@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Provider as JotaiProvider } from 'jotai';
 import HistoryItem from './history-item';
 import { Prompt } from '@/types';
-import { userEvent, within } from '@storybook/test';
+import { userEvent, within, fn } from '@storybook/test';
 
 const meta: Meta<typeof HistoryItem> = {
     title: 'Components/HistoryItem',
@@ -26,6 +26,7 @@ type Story = StoryObj<typeof HistoryItem>;
 
 const answeredItem = {
     id: 1,
+    user_id: 1,
     prompt: 'What made you smile today?',
     response: 'A walk in the park and a nice chat with a friend.',
     status: 'answered',
@@ -35,6 +36,7 @@ const answeredItem = {
 
 const pendingItem = {
     id: 2,
+    user_id: 1,
     prompt: 'What are you looking forward to?',
     response: null,
     status: 'pending',
@@ -46,6 +48,8 @@ export const Answered: Story = {
     args: {
         item: answeredItem as Prompt,
         index: 0,
+        isActive: true,
+        onSelect: fn(),
     },
 };
 

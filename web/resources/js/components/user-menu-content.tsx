@@ -1,8 +1,10 @@
 import { DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { UserInfo } from '@/components/user-info';
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
+import { resetUserStateAtom } from '@/lib/atoms';
 import { type User } from '@/types';
 import { Link, router } from '@inertiajs/react';
+import { useSetAtom } from 'jotai';
 import { LogOut, Settings } from 'lucide-react';
 
 interface UserMenuContentProps {
@@ -11,9 +13,11 @@ interface UserMenuContentProps {
 
 export function UserMenuContent({ user }: UserMenuContentProps) {
     const cleanup = useMobileNavigation();
+    const resetUserState = useSetAtom(resetUserStateAtom);
 
     const handleLogout = () => {
         cleanup();
+        resetUserState(); // Clear all user-specific atoms
         router.flushAll();
     };
 

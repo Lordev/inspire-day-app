@@ -6,6 +6,7 @@ import { describe, it, expect } from 'vitest';
 
 const mockPrompt: Prompt = {
     id: 1,
+    user_id: 1,
     prompt: 'Test prompt',
     response: 'Test response',
     date: '2025-08-26',
@@ -33,7 +34,7 @@ describe('HistoryItem', () => {
                 <HistoryItem item={mockPrompt} index={0} />
             </Provider>,
         );
-        const eye = screen.getByTitle('Analyze reflection');
+        const eye = screen.getByTitle('View reflection');
         expect(eye).toBeTruthy();
     });
 
@@ -45,8 +46,8 @@ describe('HistoryItem', () => {
                 <HistoryItem item={unansweredPrompt} index={0} />
             </Provider>,
         );
-        const eye = screen.getByTitle('Analyze reflection');
+        const eye = screen.getByTitle('View reflection');
         expect(eye).toBeTruthy();
-        expect(eye.classList.contains('opacity-50')).toBe(true);
+        expect(eye.getAttribute('disabled')).not.toBeNull();
     });
 });

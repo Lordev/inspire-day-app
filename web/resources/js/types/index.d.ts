@@ -48,6 +48,7 @@ export interface Options {
 
 export interface Prompt {
     id: number;
+    user_id: number;
     prompt: string;
     response: string | null;
     date: string;

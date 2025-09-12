@@ -6,8 +6,8 @@ import HistorySidebar from '@/components/history-sidebar';
 import { Prompt } from '@/types';
 
 const items: Prompt[] = [
-  { id: 1, prompt: 'One', response: 'R1', date: '2025-08-26', status: 'answered' },
-  { id: 2, prompt: 'Two', response: 'R2', date: '2025-08-25', status: 'answered' },
+  { id: 1, user_id: 1, prompt: 'One', response: 'R1', date: '2025-08-26', status: 'answered' },
+  { id: 2, user_id: 1, prompt: 'Two', response: 'R2', date: '2025-08-25', status: 'answered' },
 ];
 
 describe('HistorySidebar', () => {

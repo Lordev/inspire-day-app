@@ -5,7 +5,7 @@ import { describe, it, expect } from 'vitest';
 import ReflectionCard from '@/components/reflection-card';
 import { Prompt } from '@/types';
 
-const p: Prompt = { id: 1, prompt: 'Prompt', response: 'Hello world', date: '2025-08-26', status: 'answered' };
+const p: Prompt = { id: 1, user_id: 1,  prompt: 'Prompt', response: 'Hello world', date: '2025-08-26', status: 'answered' };
 
 describe('ReflectionCard', () => {
     it('renders prompt text when active', () => {

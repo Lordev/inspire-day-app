@@ -15,12 +15,14 @@ import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
 import ReflectionToolbar from './reflection-toolbar';
 import { useCallback } from 'react';
-import { useAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { currentPromptAtom } from '@/lib/atoms';
 import { useEffect } from 'react';
 
 export default function ReflectionEditor() {
-    const [currentPrompt] = useAtom(currentPromptAtom);
+    const currentPrompt = useAtomValue(currentPromptAtom);
+    const setCurrentPrompt = useSetAtom(currentPromptAtom);
+    
     const { setData, post, processing } = useForm({
         response: currentPrompt?.response || '',
     });
@@ -71,7 +73,7 @@ export default function ReflectionEditor() {
         editorProps: { attributes: { class: 'prose max-w-full focus:outline-none h-full p-4' } },
     });
 
-        useEffect(() => {
+    useEffect(() => {
         editor?.commands.setContent(currentPrompt?.response || '');
     }, [currentPrompt, editor]);
 
@@ -115,7 +117,12 @@ export default function ReflectionEditor() {
             post(`/prompt/${currentPrompt.id}/response`, {
                 preserveScroll: true,
                 onSuccess: () => {
-                    console.log('Response saved successfully!');
+                    const updatedResponse = editor?.getHTML() || '';
+                    setCurrentPrompt((prev) => prev ? { 
+                        ...prev, 
+                        response: updatedResponse,
+                        status: 'answered' 
+                    } : prev);
                 },
                 onError: (errors) => {
                     console.error('Error saving response:', errors);
