@@ -40,21 +40,26 @@ export default function AnalysisModal({ prompt, isModalOpen, onClose }: Analysis
             });
             
             const data = response.data as AnalysisResponse;
-            if (data.success && data.analysis) {
-                setAnalysis(data.analysis);
-                
-                if (currentPrompt && currentPrompt.id === prompt.id) {
-                    setCurrentPrompt({
-                        ...currentPrompt,
-                        analysis: data.analysis
-                    });
-                }
-            } else {
-                setAnalysis('No analysis available');
+            
+            if (!data.success || !data.analysis) {
+                throw new Error(data.error || 'No analysis could be generated');
             }
+            
+            setAnalysis(data.analysis);
+            
+            if (currentPrompt && currentPrompt.id === prompt.id) {
+                setCurrentPrompt({
+                    ...currentPrompt,
+                    analysis: data.analysis
+                });
+            }
+
         } catch (error) {
             console.error('Analysis error:', error);
-            setAnalysis(null);
+
+            const errorMessage = 'Failed to analyze reflection. Please try again.';
+
+            setAnalysis(errorMessage);
         } finally {
             setProcessing(false);
         }
